@@ -1,0 +1,8 @@
+hu\unideb\inf\model\Restaurant.class
+hu\unideb\inf\model\JpaFoodDAO.class
+hu\unideb\inf\model\Model.class
+hu\unideb\inf\model\Food.class
+hu\unideb\inf\model\FileFoodDAO.class
+hu\unideb\inf\controller\FXMLStudentsSceneController.class
+hu\unideb\inf\model\FoodDAO.class
+hu\unideb\inf\controller\MainApp.class
