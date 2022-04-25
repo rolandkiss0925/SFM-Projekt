@@ -22,7 +22,7 @@
          <tabs>
             <Tab fx:id="Login" text="Bejelentkezes">
                <content>
-                  <AnchorPane cache="true" cacheHint="QUALITY" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../StudentsRegister2/images/LoginFood.png'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane cache="true" cacheHint="QUALITY" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../SFMProjekto/images/LoginFood.png'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-6.0" layoutY="-1.0" prefHeight="89.0" prefWidth="809.0" style="-fx-background-color: #15592f;" text="Üdvözöljük a nemFoodpandán" textAlignment="CENTER" textFill="#daa843">
                            <font>
@@ -68,7 +68,7 @@
             </Tab>
             <Tab fx:id="registration" text="Regisztrálás">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../StudentsRegister2/images/RegisterFood.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../SFMProjekto/images/RegisterFood.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label layoutX="-6.0" layoutY="-1.0" prefHeight="89.0" prefWidth="809.0" style="-fx-background-color: #15592f;" text="            Regisztráció" textAlignment="CENTER" textFill="#ffb826">
                            <font>
@@ -113,7 +113,7 @@
             </Tab>
             <Tab fx:id="etteremeink" text="Éttermeink">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" onDragDetected="#Restaurant" prefHeight="449.0" prefWidth="704.0" style="-fx-background-image: url('file:../StudentsRegister2/images/RestaurantFood.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onDragDetected="#Restaurant" prefHeight="449.0" prefWidth="704.0" style="-fx-background-image: url('file:../SFMProjekto/images/RestaurantFood.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label layoutX="-6.0" layoutY="-3.0" prefHeight="74.0" prefWidth="811.0" style="-fx-background-color: #15592f;" text="  Kérem válasszon éttermeink közül" textAlignment="CENTER" textFill="#ffb726">
                            <font>
@@ -138,7 +138,7 @@
             </Tab>
             <Tab fx:id="etterem" text="Étterem">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="704.0" style="-fx-background-image: url('file:../StudentsRegister2/images/MenuFood.jpg');fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="704.0" style="-fx-background-image: url('file:../SFMProjekto/images/MenuFood.jpg');fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label fx:id="etterem_nev" layoutX="-6.0" layoutY="-3.0" prefHeight="74.0" prefWidth="811.0" style="-fx-background-color: #15592f;" text=" \t\t Választott étterem" textAlignment="CENTER" textFill="#ffb726">
                            <font>

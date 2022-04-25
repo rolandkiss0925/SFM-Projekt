@@ -80,7 +80,7 @@ public class FXMLStudentsSceneController implements Initializable{
         alert.setHeaderText("Nemsokára ehetsz, te dagadt");
         alert.setContentText("A regisztrálás sikeres volt");
 
-        ImageView icon = new ImageView("file:C:/Users/tozso/Desktop/StudentsRegister2/alertFood.jpg");
+        ImageView icon = new ImageView("file:../SFMProjekto/images/alertFood.jpg");
 
         icon.setFitHeight(200);
         icon.setFitWidth(200);
@@ -144,7 +144,7 @@ public class FXMLStudentsSceneController implements Initializable{
         alert.setTitle("Fizetés.exe");
         alert.setHeaderText("Köszönjük a rendelését");
         alert.setContentText("Te dagadt");
-        ImageView icon = new ImageView("file:C:/Users/tozso/Desktop/StudentsRegister2/FizetesAlert.jpg");
+        ImageView icon = new ImageView("file:../SFMProjekto/images/FizetesAlert.jpg");
 
         icon.setFitHeight(100);
         icon.setFitWidth(100);
