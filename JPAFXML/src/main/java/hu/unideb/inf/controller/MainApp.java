@@ -9,7 +9,9 @@ import org.h2.tools.Server;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,6 +38,7 @@ public class MainApp extends Application {
      */
 
     static List<Food> kajak = new ArrayList<>();
+    static List<Restaurant> ettermek = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         startDatabase();
@@ -43,6 +46,7 @@ public class MainApp extends Application {
         try(FoodDAO fDAO = new JpaFoodDAO();) {
             handleData(fDAO);
             kajak = fDAO.getFoods();
+            ettermek = fDAO.getRestaurants();
         } catch (SQLException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -55,17 +59,79 @@ public class MainApp extends Application {
         return kajak;
     }
 
-    public static void handleData(FoodDAO fDAO){
-        Model model = new Model();
+    public static List<Restaurant> getEttermek() {
+        return ettermek;
+    }
 
-        Restaurant meki = new Restaurant();
+
+    public static void handleData(FoodDAO fDAO){
+
+        String fname = "src\\main\\java\\hu\\unideb\\inf\\model\\database1.csv";
+        List<String> sorok = FileUtils.readLines(fname);
+
+        HashSet<String> ettermekset = new HashSet<>();
+
+        List<Food> foodslist = new ArrayList<>();
+
+
+        for (String sor : sorok) {
+            var tomb = sor.split(";");
+            ettermekset.add(tomb[0]);
+        }
+
+    //    Model model = new Model();
+
+        int i = 0;
+        for (String etterem : ettermekset){
+            Restaurant r = new Restaurant();
+            r.setName(etterem);
+
+            for (String sor : sorok){
+                String[] tomb = sor.split(";");
+                if (etterem.equals(tomb[0])){
+
+                    Food etel = new Food();
+                    etel.setName(tomb[1]);
+                    etel.setPrice(Integer.parseInt(tomb[3]));
+                    etel.setDb(1);
+                    r.getFoods().add(etel);
+
+                    Food ital = new Food();
+                    ital.setName(tomb[2]);
+                    ital.setPrice(Integer.parseInt(tomb[4]));
+                    ital.setDb(1);
+                    r.getFoods().add(ital);
+
+                    i++;
+
+                }
+            }
+            fDAO.saveRestaurant(r);
+        }
+
+
+    /*    Restaurant meki = new Restaurant();
         meki.setName("McDonald's");
         meki.getFoods().add(model.getPizza());
         meki.getFoods().add(model.getSb());
-        meki.getFoods().add(model.getKola());
+  //      meki.getFoods().add(model.getKola());
         fDAO.saveRestaurant(meki);
 
+        Restaurant kfc = new Restaurant();
+        kfc.setName("KFC");
+        kfc.getFoods().add(model.getKola());
+        fDAO.saveRestaurant(kfc);
 
+        Restaurant rednekk = new Restaurant();
+        Restaurant zero = new Restaurant();
+        Restaurant subway = new Restaurant();
+        rednekk.setName("Rednekk BBQ");
+        rednekk.getFoods().add(model.getJoker());
+        zero.setName("Zero Bistro");
+        subway.setName("Subway Sandwich");
+        fDAO.saveRestaurant(rednekk);
+        fDAO.saveRestaurant(zero);
+        fDAO.saveRestaurant(subway); */
     }
 
     private static Server s = new Server();

@@ -7,6 +7,7 @@ import java.util.List;
 public class FileFoodDAO implements FoodDAO{
 
     private List<Food> foods;
+    private List<Restaurant> restaurants;
 
     public FileFoodDAO() {
         //deserialization
@@ -52,6 +53,11 @@ public class FileFoodDAO implements FoodDAO{
     @Override
     public List<Food> getFoods() {
         return foods;
+    }
+
+    @Override
+    public List<Restaurant> getRestaurants(){
+        return restaurants;
     }
 
     @Override

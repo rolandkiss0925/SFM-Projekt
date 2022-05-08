@@ -11,5 +11,6 @@ public interface FoodDAO extends AutoCloseable{
     public default void saveRestaurant(Restaurant r){
         throw new UnsupportedOperationException();
     }
+    public List<Restaurant> getRestaurants();
 }
 

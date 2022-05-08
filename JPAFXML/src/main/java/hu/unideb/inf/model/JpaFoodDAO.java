@@ -48,6 +48,13 @@ public class JpaFoodDAO implements FoodDAO{
         entityManager.getTransaction().commit();
     }
 
+    @Override
+    public List<Restaurant> getRestaurants(){
+        TypedQuery<Restaurant> query = entityManager.createQuery(
+                "SELECT r FROM Restaurant r", Restaurant.class);
+        List<Restaurant> restaurants = query.getResultList();
+        return restaurants;
+    }
 
     @Override
     public void close() throws Exception {
