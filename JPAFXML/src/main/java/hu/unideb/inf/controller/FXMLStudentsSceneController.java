@@ -227,7 +227,7 @@ public class FXMLStudentsSceneController implements Initializable{
         //Felhasznalo letezes ellenorzese users.csv-bol
         Users felhasznalo = new Users(loginUserTextBox.getText(), loginPwdTextBox.getText());
 
-        if (MainApp.felhList.contains(felhasznalo)){
+        if (MainApp.getFelhList().contains(felhasznalo)){
             int x = etteremekarray.size();
             Button[] button = new Button[x];
             for (int i = 0; i < x; i++) {
