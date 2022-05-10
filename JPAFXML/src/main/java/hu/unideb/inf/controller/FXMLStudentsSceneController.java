@@ -1,9 +1,6 @@
 package hu.unideb.inf.controller;
 
-import hu.unideb.inf.model.Food;
-import hu.unideb.inf.model.JpaFoodDAO;
-import hu.unideb.inf.model.Model;
-import hu.unideb.inf.model.Restaurant;
+import hu.unideb.inf.model.*;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
@@ -14,6 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView ;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import java.net.URL;
 import java.util.*;
@@ -93,6 +93,12 @@ public class FXMLStudentsSceneController implements Initializable{
 
     @FXML
     private ChoiceBox<String> myChoiceBox;
+
+    @FXML
+    private TextField loginUserTextBox;
+
+    @FXML
+    private TextField loginPwdTextBox;
 
     @FXML
     void handleLoadButtonPushed(ActionEvent event) {
@@ -216,31 +222,45 @@ public class FXMLStudentsSceneController implements Initializable{
         alert.getDialogPane().setGraphic(icon);
         alert.showAndWait();
     }
-    public void LognGEnyo(ActionEvent actionEvent) {
 
-        int x = etteremekarray.size();
-        Button[] button = new Button[x];
-        for (int i = 0; i < x; i++) {
-            button[i] = new Button();
-            button[i].setText(SetName2(etteremekarray.get(i)));
-            button[i].setId(SetName(etteremekarray.get(i),i));
-            button[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    String text = "zegz";
-                    text = ((Button)actionEvent.getSource()).getText();
-                    init(text);
-                    tp.getSelectionModel().select(etterem);
-                }
-            });
-            etteremgrid.add(button[i],0,i);
+    public void LognGEnyo(ActionEvent actionEvent) {
+        //Felhasznalo letezes ellenorzese users.csv-bol
+        Users felhasznalo = new Users(loginUserTextBox.getText(), loginPwdTextBox.getText());
+
+        if (MainApp.felhList.contains(felhasznalo)){
+            int x = etteremekarray.size();
+            Button[] button = new Button[x];
+            for (int i = 0; i < x; i++) {
+                button[i] = new Button();
+                button[i].setText(SetName2(etteremekarray.get(i)));
+                button[i].setId(SetName(etteremekarray.get(i),i));
+                button[i].setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        String text = "zegz";
+                        text = ((Button)actionEvent.getSource()).getText();
+                        init(text);
+                        tp.getSelectionModel().select(etterem);
+                    }
+                });
+                etteremgrid.add(button[i],0,i);
+            }
+            tp.getSelectionModel().select(etteremeink);
         }
-        tp.getSelectionModel().select(etteremeink);
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hiba");
+            alert.setHeaderText("Bejelentkezes sikertelen!");
+            alert.setContentText("Felhasznalo nem letezik");
+
+            alert.showAndWait();
+        }
     }
 
 
 
     public void RegistforFood(ActionEvent actionEvent) {
+        //Opens registration tab
         tp.getSelectionModel().select(registration);
 
     }
@@ -251,6 +271,12 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
     public void GobackForLogin(ActionEvent actionEvent) {
+        //##--Felhasznalo felvetele--####
+
+
+        //###############################
+
+
         showAlertWithDefaultHeaderText();
         tp.getSelectionModel().select(Login);
 

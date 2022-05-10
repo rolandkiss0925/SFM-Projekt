@@ -60,8 +60,8 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField prefHeight="37.0" prefWidth="160.0" promptText="Email-cím" GridPane.columnIndex="1" />
-                              <PasswordField prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="loginEmailTextBox" prefHeight="37.0" prefWidth="160.0" promptText="Email-cím" GridPane.columnIndex="1" />
+                              <PasswordField fx:id="loginPwdTextBox" prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>

@@ -40,6 +40,8 @@ public class MainApp extends Application {
     static List<Food> kajak = new ArrayList<>();
     static List<Restaurant> ettermek = new ArrayList<>();
 
+    static List<Users> felhList = new ArrayList<>();
+
     public static void main(String[] args) throws Exception {
         startDatabase();
 
@@ -51,6 +53,15 @@ public class MainApp extends Application {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
+
+        try(UsersDAO uDAO = new JpaUsersDAO();) {
+            handleUserData(uDAO);
+            felhList = uDAO.getUsers();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+
         launch(args);
         stopDatabase();
     }
@@ -62,6 +73,8 @@ public class MainApp extends Application {
     public static List<Restaurant> getEttermek() {
         return ettermek;
     }
+
+    public static List<Users> getFelhList(){return felhList; }
 
 
     public static void handleData(FoodDAO fDAO){
@@ -110,6 +123,8 @@ public class MainApp extends Application {
         }
 
 
+
+
     /*    Restaurant meki = new Restaurant();
         meki.setName("McDonald's");
         meki.getFoods().add(model.getPizza());
@@ -132,6 +147,19 @@ public class MainApp extends Application {
         fDAO.saveRestaurant(rednekk);
         fDAO.saveRestaurant(zero);
         fDAO.saveRestaurant(subway); */
+    }
+
+    public static void handleUserData(UsersDAO uDAO){
+
+        String fname2 = "src\\main\\java\\hu\\unideb\\inf\\model\\users.csv";
+        List<String> sorok2 = FileUtils.readLines(fname2);
+        //HashSet<String> ettermekset = new HashSet<>();
+        //List<Users> usersList = new ArrayList<>();
+        for (String sor : sorok2) {
+            var tomb2 = sor.split(";");
+            //usersList.add(new Users(tomb2[0], tomb2[1]));
+            uDAO.saveUser(new Users(tomb2[0], tomb2[1]));
+        }
     }
 
     private static Server s = new Server();
