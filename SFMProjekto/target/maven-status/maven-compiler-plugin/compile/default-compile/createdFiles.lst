@@ -1,5 +1,6 @@
 hu\unideb\inf\controller\FXMLStudentsSceneController$1.class
 hu\unideb\inf\model\Restaurant.class
+hu\unideb\inf\model\Users.class
 hu\unideb\inf\model\JpaFoodDAO.class
 hu\unideb\inf\model\Model.class
 hu\unideb\inf\model\Food.class

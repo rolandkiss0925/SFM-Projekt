@@ -225,7 +225,10 @@ public class FXMLStudentsSceneController implements Initializable{
 
     public void LognGEnyo(ActionEvent actionEvent) {
         //Felhasznalo letezes ellenorzese users.csv-bol
-        Users felhasznalo = new Users(loginUserTextBox.getText(), loginPwdTextBox.getText());
+        //Users felhasznalo = new Users(loginUserTextBox.getText(), loginPwdTextBox.getText());
+        Users felhasznalo = new Users("geri", "asd");
+        //felhasznalo.setName(loginUserTextBox.getText());
+        //felhasznalo.setPassword(loginPwdTextBox.getText());
 
         if (MainApp.getFelhList().contains(felhasznalo)){
             int x = etteremekarray.size();

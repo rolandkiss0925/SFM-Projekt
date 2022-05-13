@@ -150,15 +150,20 @@ public class MainApp extends Application {
     }
 
     public static void handleUserData(UsersDAO uDAO){
-
         String fname2 = "src\\main\\java\\hu\\unideb\\inf\\model\\users.csv";
         List<String> sorok2 = FileUtils.readLines(fname2);
         //HashSet<String> ettermekset = new HashSet<>();
         //List<Users> usersList = new ArrayList<>();
+
+
+
         for (String sor : sorok2) {
             var tomb2 = sor.split(";");
             //usersList.add(new Users(tomb2[0], tomb2[1]));
-            uDAO.saveUser(new Users(tomb2[0], tomb2[1]));
+            Users us= new Users(tomb2[0],tomb2[1]);
+            //us.setName(tomb2[0]);
+            //us.setPassword(tomb2[1]);
+            uDAO.saveUser(us);
         }
     }
 
