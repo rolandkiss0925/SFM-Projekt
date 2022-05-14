@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
@@ -145,34 +146,29 @@
                               <Font name="System Bold Italic" size="32.0" />
                            </font>
                         </Label>
-                        <GridPane fx:id="table1" layoutX="42.0" layoutY="90.0" prefHeight="169.0" prefWidth="659.0">
+                        <GridPane fx:id="menugrid" layoutX="230.0" layoutY="175.0" prefHeight="293.0" prefWidth="531.0">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="206.0" minWidth="10.0" prefWidth="88.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="186.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="30.0" minHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="   Pizza" />
-                              <Label text="Hamburger" GridPane.rowIndex="1" />
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button fx:id="countmin" mnemonicParsing="false" onAction="#minusitem" text="-1" GridPane.columnIndex="2" />
+                              <ChoiceBox fx:id="menus" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" text="-1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" text="+1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Label text="Ételek" textFill="#fcf9f9" />
+                              <Label text="Italok" textFill="#f8f8f8" GridPane.rowIndex="1" />
+                              <ChoiceBox fx:id="menus1" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#minusitem" text="-1" GridPane.columnIndex="2" />
                               <Button mnemonicParsing="false" onAction="#plusitem" text="+1" GridPane.columnIndex="3" />
-                              <Button mnemonicParsing="false" onAction="#plusitem" text="+1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" text="-1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label fx:id="countitem" text="Darabszám" GridPane.columnIndex="4" />
-                              <Label text="Darabszám" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                        <Button layoutX="578.0" layoutY="654.0" mnemonicParsing="false" onAction="#Gotokosar" text="Kosárhoz">
+                        <Button layoutX="661.0" layoutY="654.0" mnemonicParsing="false" onAction="#Gotokosar" prefHeight="100.0" prefWidth="100.0" style="-fx-background-image: url('file:../SFMProjekto/images/market.gif'); -fx-background-position: center; -fx-background-repeat: no-repeat; -fx-text-alignment: LEFT; ;">
                            <font>
                               <Font size="32.0" />
                            </font>
@@ -182,6 +178,13 @@
                               <Font size="32.0" />
                            </font>
                         </Button>
+                        <ListView fx:id="menulist" layoutX="18.0" layoutY="174.0" prefHeight="295.0" prefWidth="152.0" />
+                        <Label layoutX="20.0" layoutY="113.0" text="Eddigi termékek" textFill="#f8f4f4">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="66.0" layoutY="723.0" text="Ha nem ízlene" textFill="WHITE" />
                      </children>
                   </AnchorPane>
                </content>

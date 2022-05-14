@@ -2,7 +2,9 @@ package hu.unideb.inf.controller;
 
 import hu.unideb.inf.model.Food;
 import hu.unideb.inf.model.Model;
+import hu.unideb.inf.model.Restaurant;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -13,6 +15,10 @@ import javafx.scene.image.ImageView ;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
+import javax.management.Query;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceUnit;
+import javax.swing.text.html.parser.Entity;
 import java.net.URL;
 import java.util.*;
 
@@ -27,9 +33,12 @@ public class FXMLStudentsSceneController implements Initializable{
         this.model = model;
     }
 
+    @PersistenceUnit
+    private EntityManager emf;
     @FXML
     private TabPane tp;
-
+    @FXML
+    private GridPane menugrid;
     @FXML
     private GridPane probagrid;
     @FXML
@@ -52,20 +61,28 @@ public class FXMLStudentsSceneController implements Initializable{
     private Tab Login;
     @FXML
     private Tab etteremeink;
+    @FXML
+    private ChoiceBox<String> menus1;
 
+    @FXML
+    private ListView<String> menulist;
+   
     @FXML
     private ChoiceBox<String> myChoiceBox;
 
-    private final String[] etteremekarray = {"Arpád burger", "Valhalla","Házi ízek", "Ibolyka pesszó","sAJTOS HÁZ","Fácánkakas"};
-    private final String[] kajakoma = {"első", "masoddik", "harmadik", "negyedik", "ötödik", "hatodik"};
+
+    private final List<String> etteremekarray =  new ArrayList<>();
+    //private final String[] etteremekarray = {"Arpád burger", "Valhalla","Házi ízek", "Ibolyka pesszó","sAJTOS HÁZ","Fácánkakas"};
+    private final List<String> kajagenyok = new ArrayList<>();
     private final String[] seged = {"-1", "+1", "Darabszam"};
     private final Button[] seged2 =new Button[4];
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
+        for (Restaurant r : MainApp.getEttermek()){
+            etteremekarray.add(r.getName());
+        }
     }
-
     @FXML
     void handleButtonPushed(){
         tp.getSelectionModel() .select(kosar);
@@ -74,40 +91,40 @@ public class FXMLStudentsSceneController implements Initializable{
     public void handleChangeName(ActionEvent actionEvent) {
     }
 
-    private void showAlertWithDefaultHeaderText() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Regisztráció");
-        alert.setHeaderText("Nemsokára ehetsz, te dagadt");
-        alert.setContentText("A regisztrálás sikeres volt");
-
-        ImageView icon = new ImageView("file:../SFMProjekto/images/alertFood.jpg");
-
-        icon.setFitHeight(200);
-        icon.setFitWidth(200);
-        alert.getDialogPane().setGraphic(icon);
-        alert.showAndWait();
-    }
     public void LognGEnyo(ActionEvent actionEvent) {
-        int x = etteremekarray.length;
+        int x = etteremekarray.size();
         Button[] button = new Button[x];
         for (int i = 0; i < x; i++) {
             button[i] = new Button();
-            button[i].setText(SetName2(etteremekarray[i]));
-            button[i].setId(SetName(etteremekarray[i],i));
+            button[i].setText(SetName2(etteremekarray.get(i)));
+            button[i].setId(SetName(etteremekarray.get(i),i));
             button[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     String text = "zegz";
                     text = ((Button)actionEvent.getSource()).getText();
                     init(text);
+                   // makemenufromrestaurnat(text);
                     tp.getSelectionModel().select(etterem);
                 }
             });
             etteremgrid.add(button[i],0,i);
+            button[i].setStyle("-fx-background-color: darkblue");
+            button[i].setStyle("-fx-text-fill: darkblue");
+            etteremgrid.setHgap(11);
+            etteremgrid.setVgap(11);
         }
         tp.getSelectionModel().select(etteremeink);
     }
 
+    private void makemenufromrestaurnat(String text) {
+        //EntityManager em = emf.getEntityManagerFactory().createEntityManager();
+        kajagenyok.addAll(MainApp.getFood(text));
+        menus1.getItems().addAll(kajagenyok);
+      //  List<Food> kajak =
+
+
+    }
 
 
     public void RegistforFood(ActionEvent actionEvent) {
@@ -138,24 +155,10 @@ public class FXMLStudentsSceneController implements Initializable{
         tp.getSelectionModel().select(etteremeink);
     }
 
-    public void Payout(ActionEvent actionEvent) {
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Fizetés.exe");
-        alert.setHeaderText("Köszönjük a rendelését");
-        alert.setContentText("Te dagadt");
-        ImageView icon = new ImageView("file:../SFMProjekto/images/FizetesAlert.jpg");
-
-        icon.setFitHeight(100);
-        icon.setFitWidth(100);
-        alert.getDialogPane().setGraphic(icon);
-
-        alert.showAndWait();
-
-    }
 
     //--------------------------SEGED FÜGGVÉNYEK----------------------------------------------------------------------------
-    public void makegrid(ActionEvent actionEvent) {
+  /*  public void makegrid(ActionEvent actionEvent) {
         int count = 0;
         int j = 0;
         String asd;
@@ -173,7 +176,7 @@ public class FXMLStudentsSceneController implements Initializable{
             minusitem2(text,x);
         }
     }
-
+*/
     private String SetName(String button, int k) {
         return String.format("%s%d",button,k);
     }
@@ -186,15 +189,48 @@ public class FXMLStudentsSceneController implements Initializable{
 
     public void plusitem(ActionEvent actionEvent) {
         x++;
-        countitem.setText("Darabszám: " + x);
+        menulist.getItems().add(menus1.getValue());
+
     }
 
     public void minusitem(ActionEvent actionEvent) {
-        if (x>0) x--;
-        countitem.setText("Darabszám: " + x);
+        menulist.getItems().remove(menus1.getValue());
 
+    }
+//-------------------ALERT---------------------------
+
+    private void showAlertWithDefaultHeaderText() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Regisztráció");
+        alert.setHeaderText("Nemsokára ehetsz, te dagadt");
+        alert.setContentText("A regisztrálás sikeres volt");
+
+        ImageView icon = new ImageView("file:../SFMProjekto/images/alertFood.jpg");
+
+        icon.setFitHeight(200);
+        icon.setFitWidth(200);
+        alert.getDialogPane().setGraphic(icon);
+        alert.showAndWait();
     }
 
 
+    public void Payout(ActionEvent actionEvent) {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Fizetés.exe");
+        alert.setHeaderText("Köszönjük a rendelését");
+        alert.setContentText("Te dagadt");
+        ImageView icon = new ImageView("file:../SFMProjekto/images/FizetesAlert.jpg");
+
+        icon.setFitHeight(100);
+        icon.setFitWidth(100);
+        alert.getDialogPane().setGraphic(icon);
+
+        alert.showAndWait();
+
+    }
+
+    public void makegrid(ActionEvent actionEvent) {
+    }
 }
 

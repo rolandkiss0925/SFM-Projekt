@@ -34,5 +34,7 @@ public class Restaurant {
         return foods;
     }
 
-    public void setFoods(List<String> foods) { }
+    public void setFoods(List<Food> foods) {
+        this.foods = foods;
+    }
 }
