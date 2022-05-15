@@ -15,11 +15,25 @@ public class Food implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
+    @Enumerated(EnumType.STRING)
+    private Type type;
     private int db = 1;
     private int price;
 
     public int getId() {
         return id;
+    }
+
+    public enum Type {
+        ETEL, ITAL
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public void setId(int id) {

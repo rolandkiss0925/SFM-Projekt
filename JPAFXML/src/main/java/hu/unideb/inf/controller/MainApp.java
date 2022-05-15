@@ -42,6 +42,7 @@ public class MainApp extends Application {
 
     static List<Food> kajak = new ArrayList<>();
     static List<Restaurant> ettermek = new ArrayList<>();
+  //  static List<Drink> italok = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         startDatabase();
@@ -82,7 +83,6 @@ public class MainApp extends Application {
                 createQuery("select name from food where from_restaurant = 6");
         List list = query.getResultList();
 
-
         return list;
     }
 
@@ -117,24 +117,26 @@ public class MainApp extends Application {
             Restaurant r = new Restaurant();
             r.setName(etterem);
 
+
             for (String sor : sorok){
                 String[] tomb = sor.split(";");
                 if (etterem.equals(tomb[0])){
 
                     Food etel = new Food();
+                    etel.setType(Food.Type.ETEL);
                     etel.setName(tomb[1]);
                     etel.setPrice(Integer.parseInt(tomb[3]));
                     etel.setDb(1);
                     r.getFoods().add(etel);
 
-                    Food ital = new Food();
+                    Drink ital = new Drink();
+                    ital.setType(Food.Type.ITAL);
                     ital.setName(tomb[2]);
                     ital.setPrice(Integer.parseInt(tomb[4]));
                     ital.setDb(1);
                     r.getFoods().add(ital);
 
                     i++;
-
                 }
             }
             fDAO.saveRestaurant(r);

@@ -94,7 +94,7 @@ public class FXMLStudentsSceneController implements Initializable{
         int i = 0;
         final int[] total = {0};
         for (Food f : MainApp.getKajak()){
-            if (f.getName().contains("burger")) {
+            if (f.getName().contains("burger") && !Objects.equals(f.getName(), "null")) {
                 Label name = new Label();
                 name.setText(f.getName());
                 name.setPrefSize(75,75);

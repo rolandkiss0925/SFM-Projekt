@@ -7,6 +7,7 @@ import java.util.List;
 public class FileFoodDAO implements FoodDAO{
 
     private List<Food> foods;
+  // HIBA:   private List<Drink> drinks;
     private List<Restaurant> restaurants;
 
     public FileFoodDAO() {
@@ -54,6 +55,11 @@ public class FileFoodDAO implements FoodDAO{
     public List<Food> getFoods() {
         return foods;
     }
+
+/*    @Override
+    public List<Drink> getDrinks() {
+        return drinks;
+    } */
 
     @Override
     public List<Restaurant> getRestaurants(){

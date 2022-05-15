@@ -34,6 +34,14 @@ public class Restaurant {
         return foods;
     }
 
+/*    public List<Drink> getDrinks(){
+        return drinks;
+    }
+
+    public void setDrinks(List<Drink> drinks){
+        this.drinks = drinks;
+    } */
+
     public void setFoods(List<Food> foods) {
         this.foods = foods;
     }
