@@ -6,20 +6,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.h2.tools.Server;
+import org.hibernate.Session;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 
 public class MainApp extends Application {
-
+   // @PersistenceContext
+    private static final EntityManager em = JpaFoodDAO.getEntityManager();
 
 
     @Override
@@ -50,7 +52,7 @@ public class MainApp extends Application {
 
         try(FoodDAO fDAO = new JpaFoodDAO();) {
             handleData(fDAO);
-            kajak = fDAO.getFoods();
+         //   kajak = fDAO.getFoods();
             ettermek = fDAO.getRestaurants();
         } catch (SQLException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,20 +75,47 @@ public class MainApp extends Application {
         }
         return kajakgenyo;
     }
-    public static List<String> getFood(String etterem) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "jdbc:h2:file:~/db3_jpa_fxml" );
-        EntityManager entitymanager = emfactory.createEntityManager();
-        int x = 4;
-
-        //Scalar function
-        Query query = entitymanager.
-                createQuery("select name from food where from_restaurant = 6");
-        List list = query.getResultList();
+    public static List<Food> getFood(String etterem) {
+        /*//EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("br.com.fredericci.pu");
+        EntityManager entityManager = JpaFoodDAO.entityManagerFactory.createEntityManager();
+        //EntityManager entityManager = JpaFoodDAO.getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.getTransaction().commit();
 
 
-        return list;
+
+            try {
+                return (List<Food>) entityManager.createQuery(
+                                "SELECT f from Food f")
+                        .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+         */
+        JpaFoodDAO.getEntityManager().getTransaction().begin();
+        TypedQuery<Food> query = JpaFoodDAO.getEntityManager().createQuery(
+                "SELECT f.name FROM Food f", Food.class);
+        List<Food> foods = query.getResultList();
+        return foods;
+        //EntityManager entityManager = JpaFoodDAO.entityManagerFactory.createEntityManager();
+
+
+
+    /*
+
+        try {
+            em.getTransaction().begin();
+            TypedQuery<Food> query = em.createQuery(
+                    "SELECT f.name FROM Food f", Food.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        */
     }
-
 
     public static List<Food> getKajak(){
 

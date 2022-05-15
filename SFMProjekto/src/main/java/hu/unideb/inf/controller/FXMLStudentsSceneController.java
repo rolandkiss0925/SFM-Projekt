@@ -1,10 +1,9 @@
 package hu.unideb.inf.controller;
 
 import hu.unideb.inf.model.Food;
+import hu.unideb.inf.model.JpaFoodDAO;
 import hu.unideb.inf.model.Model;
 import hu.unideb.inf.model.Restaurant;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -15,10 +14,8 @@ import javafx.scene.image.ImageView ;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceUnit;
-import javax.swing.text.html.parser.Entity;
 import java.net.URL;
 import java.util.*;
 
@@ -73,7 +70,7 @@ public class FXMLStudentsSceneController implements Initializable{
 
     private final List<String> etteremekarray =  new ArrayList<>();
     //private final String[] etteremekarray = {"Arpád burger", "Valhalla","Házi ízek", "Ibolyka pesszó","sAJTOS HÁZ","Fácánkakas"};
-    private final List<String> kajagenyok = new ArrayList<>();
+    private final List<String> kajagenyok = new ArrayList<String>();
     private final String[] seged = {"-1", "+1", "Darabszam"};
     private final Button[] seged2 =new Button[4];
 
@@ -104,7 +101,7 @@ public class FXMLStudentsSceneController implements Initializable{
                     String text = "zegz";
                     text = ((Button)actionEvent.getSource()).getText();
                     init(text);
-                   // makemenufromrestaurnat(text);
+                    makemenufromrestaurnat(text);
                     tp.getSelectionModel().select(etterem);
                 }
             });
@@ -119,8 +116,11 @@ public class FXMLStudentsSceneController implements Initializable{
 
     private void makemenufromrestaurnat(String text) {
         //EntityManager em = emf.getEntityManagerFactory().createEntityManager();
-        kajagenyok.addAll(MainApp.getFood(text));
-        menus1.getItems().addAll(kajagenyok);
+        kajagenyok.addAll(JpaFoodDAO.getapad(text));
+        for (String s:kajagenyok) {
+             menus1.getItems().add(String.valueOf(s));
+        }
+        //menus1.getItems().addAll(kajagenyok);
       //  List<Food> kajak =
 
 

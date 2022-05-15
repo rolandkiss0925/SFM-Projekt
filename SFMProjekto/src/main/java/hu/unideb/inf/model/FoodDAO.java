@@ -1,7 +1,9 @@
 package hu.unideb.inf.model;
 
+import javax.persistence.Table;
 import java.util.List;
 
+@Table(name="Food")
 public interface FoodDAO extends AutoCloseable{
 
     public void saveFood(Food f);

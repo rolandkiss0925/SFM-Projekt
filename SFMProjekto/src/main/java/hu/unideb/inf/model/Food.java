@@ -14,7 +14,7 @@ public class Food implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String name;
+    private String Food_name;
     private int db = 1;
     private int price;
 
@@ -27,11 +27,11 @@ public class Food implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return Food_name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Food_name = name;
     }
 
     public int getDb() {

@@ -4,30 +4,31 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@javax.persistence.Table(name = "Restaurant")
 @Entity
 public class Restaurant {
     @Id
     @GeneratedValue
-    private int id;
-    private String name;
+    private int Rid;
+    private String Rname;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "from_restaurant")
     private List<Food> foods = new ArrayList<>();
 
     public int getId() {
-        return id;
+        return Rid;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.Rid = id;
     }
 
     public String getName() {
-        return name;
+        return Rname;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Rname = name;
     }
 
     public List<Food> getFoods() {
