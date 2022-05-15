@@ -17,6 +17,20 @@ public class Food implements Serializable {
     private String Food_name;
     private int db = 1;
     private int price;
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    public enum Type {
+        ETEL, ITAL
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;

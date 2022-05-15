@@ -5,6 +5,7 @@ import org.hibernate.Session;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class JpaFoodDAO implements FoodDAO{
@@ -16,6 +17,7 @@ public class JpaFoodDAO implements FoodDAO{
     public static EntityManager getEntityManager() {
         return entityManager;
     }
+
 
     @Override
     public void saveFood(Food f) {
@@ -65,24 +67,37 @@ public class JpaFoodDAO implements FoodDAO{
 
     @Override
     public void close() throws Exception {
+        //Különben hamarabb bezárja az EntityManagert
         //entityManager.close();
         //entityManagerFactory.close();
     }
 
-    public static List<String> getapad(String etteremname){
+    //Az  éttreremhez tartozó ételeklekérdezése
+    public static List<String> getfood(String etteremname){
        // JpaFoodDAO.getEntityManager().getTransaction().begin();
-        TypedQuery<String> query = (TypedQuery<String>) entityManager.createQuery(
-                "select f.Food_name from Food f, Restaurant where from_restaurant = Rid AND Rname = '"+etteremname+"'");
-        List<String> foods = query.getResultList();
-        return foods;
-
-            /*
-        TypedQuery<String> query = (TypedQuery<String>) entityManager.createQuery(
-                "select name from Food f where from_restaurant = 1");
-        List<String> foods = query.getResultList();
-        return foods;
-             */
-
-
+       try {
+           @SuppressWarnings("unchecked")
+           TypedQuery<String> query = (TypedQuery<String>) entityManager.createQuery(
+                   "select f.Food_name from Food f, Restaurant where from_restaurant = Rid AND type = 'ETEL' AND Rname = '" + etteremname + "'");
+           return query.getResultList();
+       }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
+
+    public static Collection<String> getdrink(String etteremname2) {
+        try {
+            @SuppressWarnings("unchecked")
+            TypedQuery<String> query = (TypedQuery<String>) entityManager.createQuery(
+                    "select f.Food_name from Food f, Restaurant where from_restaurant = Rid AND type = 'ITAL' AND Rname = '" + etteremname2 + "'");
+            return query.getResultList();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
 }

@@ -7,7 +7,6 @@ public class Model {
     private Food joker = new Food();
 
     public Model(){
-
     }
 
     public Food getPizza() {

@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.controller.FXMLStudentsSceneController">
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.controller.FXMLStudentsSceneController">
    <children>
       <TabPane fx:id="tp" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
@@ -48,7 +48,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="E-mail cím" textFill="#f8f6f6">
+                              <Label text="Felhasználó név" textFill="#f8f6f6">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -58,8 +58,8 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="loginNameTextBox" prefHeight="37.0" prefWidth="160.0" promptText="Email-cím" GridPane.columnIndex="1" />
-                              <PasswordField fx:id="loginPwdTextBox" prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField prefHeight="37.0" prefWidth="160.0" promptText="Email-cím" GridPane.columnIndex="1" />
+                              <PasswordField prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>
@@ -103,12 +103,11 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="regEmailTextBox" promptText="Email-cím" GridPane.columnIndex="1" />
+                              <TextField promptText="Email-cím" GridPane.columnIndex="1" />
                               <TextField promptText="Név" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <PasswordField fx:id="regPwdTextBox" promptText="Titkos jelszó" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <PasswordField promptText="Titkos jelszó" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
-                        <Button fx:id="back2Login" layoutX="517.0" layoutY="525.0" mnemonicParsing="false" onAction="#back2Login" text="Vissza a bejelentkezéshez" />
                      </children>
                   </AnchorPane>
                </content>
@@ -159,9 +158,9 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <ChoiceBox fx:id="menus" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" text="-1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" text="+1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <ChoiceBox fx:id="menus2" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#minusitem2" text="-1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#plusitem2" text="+1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               <Label text="Ételek" textFill="#fcf9f9" />
                               <Label text="Italok" textFill="#f8f8f8" GridPane.rowIndex="1" />
                               <ChoiceBox fx:id="menus1" prefWidth="150.0" GridPane.columnIndex="1" />
