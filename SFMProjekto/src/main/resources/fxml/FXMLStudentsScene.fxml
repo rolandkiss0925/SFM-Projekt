@@ -47,7 +47,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="Felhasználó név" textFill="#f8f6f6">
+                              <Label text="E-mail cím" textFill="#f8f6f6">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -57,7 +57,7 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="loginNameTextBox" prefHeight="37.0" prefWidth="160.0" promptText="Felhasználónév" GridPane.columnIndex="1" />
+                              <TextField fx:id="loginNameTextBox" prefHeight="37.0" prefWidth="160.0" promptText="E-mail cím" GridPane.columnIndex="1" />
                               <PasswordField fx:id="loginPwdTextBox" prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
