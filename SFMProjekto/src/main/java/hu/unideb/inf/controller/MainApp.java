@@ -55,32 +55,23 @@ public class MainApp extends Application {
     public static List<Restaurant> getEttermek() {
         return ettermek;
     }
-    public static void handleData(FoodDAO fDAO){
+    public static void handleData(FoodDAO fDAO) {
 
         String fname = "src\\main\\java\\hu\\unideb\\inf\\model\\database1.csv";
         List<String> sorok = FileUtils.readLines(fname);
-
         HashSet<String> ettermekset = new HashSet<>();
-
         List<Food> foodslist = new ArrayList<>();
-
-
         for (String sor : sorok) {
             var tomb = sor.split(";");
             ettermekset.add(tomb[0]);
         }
-
-        //    Model model = new Model();
-
         int i = 0;
-        for (String etterem : ettermekset){
+        for (String etterem : ettermekset) {
             Restaurant r = new Restaurant();
             r.setName(etterem);
-
-
-            for (String sor : sorok){
+            for (String sor : sorok) {
                 String[] tomb = sor.split(";");
-                if (etterem.equals(tomb[0])){
+                if (etterem.equals(tomb[0])) {
 
                     Food etel = new Food();
                     etel.setType(Food.Type.ETEL);
@@ -96,6 +87,13 @@ public class MainApp extends Application {
                     ital.setDb(1);
                     r.getFoods().add(ital);
 
+                    Garnish koret = new Garnish();
+                    koret.setType(Food.Type.KORET);
+                    koret.setName(tomb[5]);
+                    koret.setPrice(Integer.parseInt(tomb[6]));
+                    koret.setDb(1);
+                    r.getFoods().add(koret);
+
                     i++;
                 }
             }
@@ -103,7 +101,8 @@ public class MainApp extends Application {
         }
     }
 
-    private static Server s = new Server();
+
+        private static Server s = new Server();
 
     private static void startDatabase() throws SQLException {
         s.runTool("-tcp", "-web", "-ifNotExists");

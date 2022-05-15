@@ -30,19 +30,16 @@ public class FileFoodDAO implements FoodDAO{
             e.printStackTrace();
         }
     }
-
     @Override
     public void saveFood(Food f) {
         if (!foods.contains(f)) foods.add(f);
         serialize();
     }
-
     @Override
     public void deleteFood(Food f) {
         foods.remove(f);
         serialize();
     }
-
     @Override
     public void updateFood(Food f) {
         foods.remove(f); //change the equals method of the Animal to have a proper working

@@ -20,46 +20,34 @@ public class Food implements Serializable {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    public enum Type {
-        ETEL, ITAL
-    }
-
+    public enum Type { ETEL, ITAL, KORET }
     public Type getType() {
         return type;
     }
-
     public void setType(Type type) {
         this.type = type;
     }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getName() {
         return Food_name;
     }
-
     public void setName(String name) {
         this.Food_name = name;
     }
-
     public int getDb() {
         return db;
     }
-
     public void setDb(int db) {
         this.db = db;
     }
-
     public int getPrice() {
         return price;
     }
-
     public void setPrice(int price) {
         this.price = price;
     }

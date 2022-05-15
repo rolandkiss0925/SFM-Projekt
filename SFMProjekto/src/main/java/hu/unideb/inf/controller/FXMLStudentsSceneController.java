@@ -22,7 +22,6 @@ import java.util.*;
 public class FXMLStudentsSceneController implements Initializable{
     private Model model;
     private Food foods;
-    private int x = 0;
 
     private EventHandler<ActionEvent> GoToEtterem;
 
@@ -53,14 +52,16 @@ public class FXMLStudentsSceneController implements Initializable{
     @FXML
     private ChoiceBox<String> menus2;
     @FXML
+    private ChoiceBox<String> menus3;
+    @FXML
     private ListView<String> menulist;
     @FXML
     private ChoiceBox<String> myChoiceBox;
 
-
     private final List<String> etteremekarray =  new ArrayList<>();
     private final List<String> kajagenyok = new ArrayList<String>();
     private final List<String> italgenyok = new ArrayList<String>();
+    private final List<String> koretgenyok = new ArrayList<String>();
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -90,6 +91,7 @@ public class FXMLStudentsSceneController implements Initializable{
                     init(text);
                     makemenufromrestaurnat(text);
                     makedrinkfromrestaurnat(text);
+                    makekoretfromrestaurnat(text);
                     tp.getSelectionModel().select(etterem);
                 }
             });
@@ -115,6 +117,14 @@ public class FXMLStudentsSceneController implements Initializable{
              menus1.getItems().add(String.valueOf(s));
         }
     }
+
+    private void makekoretfromrestaurnat(String text) {
+        koretgenyok.addAll(JpaFoodDAO.getkoret(text));
+        for (String s:koretgenyok) {
+            menus3.getItems().add(String.valueOf(s));
+        }
+    }
+
 
     //Regisztráló ablakhoz dob
     public void RegistforFood(ActionEvent actionEvent) {tp.getSelectionModel().select(registration); }
@@ -144,17 +154,19 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
 
-
     //--------------------------SEGED FÜGGVÉNYEK----------------------------------------------------------------------------
      private String SetName(String button, int k) {return String.format("%s%d",button,k);}
     private String SetName2(String s) {return String.format("%s",s);}
 
     public void plusitem(ActionEvent actionEvent) {menulist.getItems().add(menus1.getValue());}
     public void plusitem2(ActionEvent actionEvent) {menulist.getItems().add(menus2.getValue()); }
+    public void plusitem3(ActionEvent actionEvent) {menulist.getItems().add(menus3.getValue()); }
 
     public void minusitem(ActionEvent actionEvent) {menulist.getItems().remove(menus1.getValue());}
     public void minusitem2(ActionEvent actionEvent) {menulist.getItems().remove(menus2.getValue());}
+    public void minusitem3(ActionEvent actionEvent) {menulist.getItems().remove(menus3.getValue());}
 //-------------------ALERT---------------------------
+
     //regisztráció után felugró ablak
     private void showAlertWithDefaultHeaderText() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -184,7 +196,6 @@ public class FXMLStudentsSceneController implements Initializable{
         alert.getDialogPane().setGraphic(icon);
 
         alert.showAndWait();
-
     }
 
     public void makegrid(ActionEvent actionEvent) {
