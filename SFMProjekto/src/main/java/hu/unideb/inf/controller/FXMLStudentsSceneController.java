@@ -126,7 +126,7 @@ public class FXMLStudentsSceneController implements Initializable{
         else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Hiba");
-            alert.setHeaderText("Felhasználónév vagy jelszó helytelen!");
+            alert.setHeaderText("E-mail vagy jelszó helytelen!");
             alert.showAndWait();
         }
 
