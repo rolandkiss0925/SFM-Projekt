@@ -6,6 +6,7 @@ hu\unideb\inf\controller\FXMLStudentsSceneController$2.class
 hu\unideb\inf\controller\MainApp.class
 hu\unideb\inf\model\Food$Type.class
 hu\unideb\inf\controller\FXMLStudentsSceneController$1.class
+hu\unideb\inf\model\Garnish.class
 hu\unideb\inf\model\Model.class
 hu\unideb\inf\model\Food.class
 hu\unideb\inf\model\FileFoodDAO.class

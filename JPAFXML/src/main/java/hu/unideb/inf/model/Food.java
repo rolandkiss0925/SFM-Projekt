@@ -25,7 +25,7 @@ public class Food implements Serializable {
     }
 
     public enum Type {
-        ETEL, ITAL
+        ETEL, ITAL, KORET
     }
 
     public Type getType() {

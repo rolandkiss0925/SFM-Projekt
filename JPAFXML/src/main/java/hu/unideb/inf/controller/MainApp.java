@@ -136,6 +136,13 @@ public class MainApp extends Application {
                     ital.setDb(1);
                     r.getFoods().add(ital);
 
+                    Garnish koret = new Garnish();
+                    koret.setType(Food.Type.KORET);
+                    koret.setName(tomb[5]);
+                    koret.setPrice(Integer.parseInt(tomb[6]));
+                    koret.setDb(1);
+                    r.getFoods().add(koret);
+
                     i++;
                 }
             }
