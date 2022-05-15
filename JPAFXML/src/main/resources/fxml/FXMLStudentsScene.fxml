@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
@@ -25,7 +25,7 @@
          <tabs>
             <Tab fx:id="Login" text="Bejelentkezes">
                <content>
-                  <AnchorPane cache="true" cacheHint="QUALITY" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../StudentsRegister2/images/LoginFood.png'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane cache="true" cacheHint="QUALITY" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../SFMProjekto/images/LoginFood.png'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-6.0" layoutY="-1.0" prefHeight="89.0" prefWidth="809.0" style="-fx-background-color: #15592f;" text="Üdvözöljük a nemFoodpandán" textAlignment="CENTER" textFill="#daa843">
                            <font>
@@ -71,7 +71,7 @@
             </Tab>
             <Tab fx:id="registration" text="Regisztrálás">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../StudentsRegister2/images/RegisterFood.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../SFMProjekto/images/RegisterFood.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label layoutX="-6.0" layoutY="-1.0" prefHeight="89.0" prefWidth="809.0" style="-fx-background-color: #15592f;" text="            Regisztráció" textAlignment="CENTER" textFill="#ffb826">
                            <font>
@@ -116,7 +116,7 @@
             </Tab>
             <Tab fx:id="etteremeink" text="Éttermeink">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" onDragDetected="#Restaurant" prefHeight="449.0" prefWidth="704.0" style="-fx-background-image: url('file:../StudentsRegister2/images/RestaurantFood.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onDragDetected="#Restaurant" prefHeight="449.0" prefWidth="704.0" style="-fx-background-image: url('file:../SFMProjekto/images/RestaurantFood.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label layoutX="-6.0" layoutY="-3.0" prefHeight="74.0" prefWidth="811.0" style="-fx-background-color: #15592f;" text="  Kérem válasszon éttermeink közül" textAlignment="CENTER" textFill="#ffb726">
                            <font>
@@ -141,41 +141,36 @@
             </Tab>
             <Tab fx:id="etterem" text="Étterem">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="704.0" style="-fx-background-image: url('file:../StudentsRegister2/images/MenuFood.jpg');fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="704.0" style="-fx-background-image: url('file:../SFMProjekto/images/MenuFood.jpg');fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label fx:id="etterem_nev" layoutX="-6.0" layoutY="-3.0" prefHeight="74.0" prefWidth="811.0" style="-fx-background-color: #15592f;" text=" \t\t Választott étterem" textAlignment="CENTER" textFill="#ffb726">
                            <font>
                               <Font name="System Bold Italic" size="32.0" />
                            </font>
                         </Label>
-                        <GridPane fx:id="table1" layoutX="42.0" layoutY="90.0" prefHeight="169.0" prefWidth="659.0">
+                        <GridPane fx:id="menugrid" layoutX="230.0" layoutY="175.0" prefHeight="293.0" prefWidth="531.0">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="206.0" minWidth="10.0" prefWidth="88.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="186.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="30.0" minHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="   Pizza" />
-                              <Label text="Hamburger" GridPane.rowIndex="1" />
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button fx:id="countmin" mnemonicParsing="false" onAction="#minusitem" text="-1" GridPane.columnIndex="2" />
+                              <ChoiceBox fx:id="menus" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" text="-1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" text="+1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Label text="Ételek" textFill="#fcf9f9" />
+                              <Label text="Italok" textFill="#f8f8f8" GridPane.rowIndex="1" />
+                              <ChoiceBox fx:id="menus1" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#minusitem" text="-1" GridPane.columnIndex="2" />
                               <Button mnemonicParsing="false" onAction="#plusitem" text="+1" GridPane.columnIndex="3" />
-                              <Button mnemonicParsing="false" onAction="#plusitem" text="+1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" text="-1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label fx:id="countitem" text="Darabszám" GridPane.columnIndex="4" />
-                              <Label text="Darabszám" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                        <Button layoutX="578.0" layoutY="654.0" mnemonicParsing="false" onAction="#Gotokosar" text="Kosárhoz">
+                        <Button layoutX="661.0" layoutY="654.0" mnemonicParsing="false" onAction="#Gotokosar" prefHeight="100.0" prefWidth="100.0" style="-fx-background-image: url('file:../SFMProjekto/images/market.gif'); -fx-background-position: center; -fx-background-repeat: no-repeat; -fx-text-alignment: LEFT; ;">
                            <font>
                               <Font size="32.0" />
                            </font>
@@ -185,6 +180,13 @@
                               <Font size="32.0" />
                            </font>
                         </Button>
+                        <ListView fx:id="menulist" layoutX="18.0" layoutY="174.0" prefHeight="295.0" prefWidth="152.0" />
+                        <Label layoutX="20.0" layoutY="113.0" text="Eddigi termékek" textFill="#f8f4f4">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="66.0" layoutY="723.0" text="Ha nem ízlene" textFill="WHITE" />
                      </children>
                   </AnchorPane>
                </content>
@@ -198,100 +200,6 @@
                               <Font name="System Bold Italic" size="32.0" />
                            </font>
                         </Label>
-                        <GridPane fx:id="kosargrid" layoutX="73.0" layoutY="143.0" prefHeight="264.0" prefWidth="613.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Button mnemonicParsing="false" onAction="#handleLoadButtonPushed" text="Load">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Button>
-                              <Label fx:id="nameLabel" text="Label" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="creditsLabel" alignment="CENTER" text="Label" GridPane.columnIndex="3">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="foodLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="priceLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Label" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="foodLabel1" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="priceLabel1" alignment="CENTER" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="q0" text="Label" textAlignment="CENTER" GridPane.columnIndex="2" />
-                              <Label fx:id="q1" text="Label" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label fx:id="q2" text="Label" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleButtonAdd" text="+" GridPane.columnIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="75.0" />
-                                 </GridPane.margin></Button>
-                              <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleButtonRemove" text="-" GridPane.columnIndex="2">
-                                 <GridPane.margin>
-                                    <Insets right="75.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="314.0" layoutY="38.0" mnemonicParsing="false" onAction="#handleButtonRemove1" text="-" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets right="75.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="314.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleButtonRemove2" text="-" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets right="75.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="387.0" layoutY="38.0" mnemonicParsing="false" onAction="#handleButtonAdd2" text="+" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="75.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="387.0" layoutY="38.0" mnemonicParsing="false" onAction="#handleButtonAdd1" text="+" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="75.0" />
-                                 </GridPane.margin>
-                              </Button>
-                           </children>
-                        </GridPane>
                         <Line endX="699.0" layoutX="101.0" layoutY="492.0" startX="-100.0" />
                         <Text layoutX="37.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teljes ár:" wrappingWidth="179.13671875">
                            <font>
@@ -308,6 +216,20 @@
                               <Font size="33.0" />
                            </font>
                         </Button>
+                        <Button fx:id="loader" layoutX="12.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleLoadButtonPushed" prefHeight="43.0" prefWidth="92.0" text="Betöltés">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Button>
+                        <GridPane fx:id="kosargrid" alignment="CENTER" layoutX="122.0" layoutY="114.0" prefHeight="210.0" prefWidth="651.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="245.60003662109375" minWidth="-Infinity" prefWidth="245.60003662109375" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="127.20001220703125" minWidth="0.0" prefWidth="27.799999999999983" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="182.20000000000002" minWidth="10.0" prefWidth="91.99998779296874" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="184.00001220703126" minWidth="10.0" prefWidth="26.800012207031273" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="267.20000000000005" minWidth="10.0" prefWidth="263.9999877929688" />
+                           </columnConstraints>
+                        </GridPane>
                      </children>
                   </AnchorPane>
                </content>

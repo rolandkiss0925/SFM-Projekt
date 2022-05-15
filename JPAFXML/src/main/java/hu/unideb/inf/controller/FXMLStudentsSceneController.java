@@ -6,15 +6,22 @@ import hu.unideb.inf.model.Model;
 import hu.unideb.inf.model.Restaurant;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView ;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceUnit;
 import java.net.URL;
 import java.util.*;
 
@@ -29,21 +36,30 @@ public class FXMLStudentsSceneController implements Initializable{
         this.model = model;
     }
 
-    @FXML
-    private TabPane tp;
+    @PersistenceUnit
+    private EntityManager emf;
 
     @FXML
-    private GridPane probagrid;
-    @FXML
-    private GridPane etteremgrid;
+    private TabPane tp;
 
     @FXML
     private GridPane kosargrid;
 
     @FXML
+    private GridPane menugrid;
+
+    @FXML
+    private GridPane probagrid;
+
+    @FXML
+    private GridPane etteremgrid;
+
+    @FXML
     private Label etterem_nev;
+
     @FXML
     private Label countitem;
+
     @FXML
     private Tab kosar;
 
@@ -54,137 +70,86 @@ public class FXMLStudentsSceneController implements Initializable{
     private Tab registration;
 
     @FXML
+    private Label totalPrice;
+
+    @FXML
     private Tab Login;
+
     @FXML
     private Tab etteremeink;
 
     @FXML
-    private Label foodLabel;
+    private ChoiceBox<String> menus1;
 
     @FXML
-    private Label priceLabel;
-
-    @FXML
-    private Label creditsLabel;
-
-    @FXML
-    private Label nameLabel;
-
-    @FXML
-    private Label foodLabel1;
-
-    @FXML
-    private Label priceLabel1;
-
-    @FXML
-    private Label totalPrice;
-
-    @FXML
-    private Label quantity1;
-
-    @FXML
-    private Label quantity2;
-
-    @FXML
-    private Label quantity3;
-
-    @FXML
-    private List<Label> q = new ArrayList<>();
+    private ListView<String> menulist;
 
     @FXML
     private ChoiceBox<String> myChoiceBox;
 
-    @FXML
-    void handleLoadButtonPushed(ActionEvent event) {
-
-        for(Label l : q){
-            l = new Label();
-        }
-
-        StringBuilder sb = new StringBuilder("q");
-        for (int i = 0; i < q.size(); i++){
-            q.get(i).setId(sb.append(i).toString());
-            q.get(i).setText(MainApp.getKajak().get(i).getDb() + "");
-        }
-
-
-        nameLabel.setText(MainApp.getKajak().get(0).getName());
-        creditsLabel.setText(MainApp.getKajak().get(0).getPrice() + " ft");
-
-        foodLabel.setText(MainApp.getKajak().get(1).getName());
-        priceLabel.setText(MainApp.getKajak().get(1).getPrice() + " ft");
-
-        foodLabel1.setText(MainApp.getKajak().get(2).getName());
-        priceLabel1.setText(MainApp.getKajak().get(2).getPrice() + " ft");
-
-        totalPrice.setText(MainApp.getKajak().get(0).getPrice() +MainApp.getKajak().get(1).getPrice() + MainApp.getKajak().get(2).getPrice() + " ft");
-
-    //    quantity1.setText(MainApp.getKajak().get(0).getDb() + "");
-    //    quantity2.setText(MainApp.getKajak().get(1).getDb() + "");
-    //    quantity3.setText(MainApp.getKajak().get(2).getDb() + "");
-
-        if (MainApp.getKajak().get(0).getDb() == 0)
-            kosargrid.getChildren().removeAll(nameLabel, creditsLabel, quantity1);
-
-    }
-
-    private final int baseprice = MainApp.getKajak().get(0).getPrice();
-    private final int baseprice1 = MainApp.getKajak().get(1).getPrice();
-    private final int baseprice2 = MainApp.getKajak().get(2).getPrice();
 
     @FXML
-    void handleButtonAdd(ActionEvent event){
-        adder(MainApp.getKajak().get(0), baseprice);
-        handleLoadButtonPushed(event);
-    }
+    public void handleLoadButtonPushed(ActionEvent event) {
 
-    @FXML
-    void handleButtonRemove(ActionEvent event){
-        remover(MainApp.getKajak().get(0), baseprice);
-        handleLoadButtonPushed(event);
-    }
+        int i = 0;
+        final int[] total = {0};
+        for (Food f : MainApp.getKajak()){
+            if (f.getName().contains("burger")) {
+                Label name = new Label();
+                name.setText(f.getName());
+                name.setPrefSize(75,75);
 
-    @FXML
-    void handleButtonAdd1(ActionEvent event){
-        adder(MainApp.getKajak().get(1), baseprice1);
-        handleLoadButtonPushed(event);
-    }
+                Label db = new Label(f.getDb() + "");
 
-    @FXML
-    void handleButtonRemove1(ActionEvent event){
-        remover(MainApp.getKajak().get(1), baseprice1);
-        handleLoadButtonPushed(event);
-    }
+                Label price = new Label();
+                int baseprice = f.getPrice();
+                price.setText(baseprice + " Ft");
 
-    @FXML
-    void handleButtonAdd2(ActionEvent event){
-        adder(MainApp.getKajak().get(2), baseprice2);
-        handleLoadButtonPushed(event);
-    }
+                Button min = new Button("-");
+                int finalI = i;
+                min.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        total[0] -= baseprice;
+                        totalPrice.setText(total[0] + " Ft");
+                        f.setDb(f.getDb()-1);
+                        db.setText(f.getDb() + "");
+                        f.setPrice(baseprice * f.getDb());
+                        price.setText(f.getPrice() + " Ft");
+                        if (f.getDb() == 0) {
+                            kosargrid.getChildren().removeIf(n -> GridPane.getRowIndex(n) == finalI);
+                        }
+                    }
+                });
 
-    @FXML
-    void handleButtonRemove2(ActionEvent event){
-        remover(MainApp.getKajak().get(2), baseprice2);
-        handleLoadButtonPushed(event);
-    }
+                Button plus = new Button("+");
+                plus.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        total[0] += baseprice;
+                        totalPrice.setText(total[0] + " Ft");
+                        f.setDb(f.getDb()+1);
+                        f.setPrice(baseprice * f.getDb());
+                        price.setText(f.getPrice() + " Ft");
+                        db.setText(f.getDb() + "");
+                    }
+                });
 
-    void remover(Food food, int price){
-        if (food.getDb() != 0) {
-            int db = food.getDb() - 1;
-            food.setDb(db);
-            food.setPrice(price * db);
+                total[0] += f.getPrice();
+
+                totalPrice.setText(total[0] + " Ft");
+
+                kosargrid.addRow(i, name, min, db, plus, price);
+                i++;
+
+            }
         }
     }
 
-    void adder(Food food, int price){
-        int db = food.getDb() + 1;
-        food.setDb(db);
-        food.setPrice(price * db);
-    }
 
- //   private final String[] etteremekarray = {"Arpád burger", "Valhalla","Házi ízek", "Ibolyka pesszó","sAJTOS HÁZ","Fácánkakas"};
-    private List<String> etteremekarray = new ArrayList<>();
-    private final String[] kajakoma = {"első", "masoddik", "harmadik", "negyedik", "ötödik", "hatodik"};
+    private final List<String> etteremekarray =  new ArrayList<>();
+    //private final String[] etteremekarray = {"Arpád burger", "Valhalla","Házi ízek", "Ibolyka pesszó","sAJTOS HÁZ","Fácánkakas"};
+    private final List<String> kajagenyok = new ArrayList<>();
     private final String[] seged = {"-1", "+1", "Darabszam"};
     private final Button[] seged2 =new Button[4];
 
@@ -194,7 +159,6 @@ public class FXMLStudentsSceneController implements Initializable{
             etteremekarray.add(r.getName());
         }
     }
-
     @FXML
     void handleButtonPushed(){
         tp.getSelectionModel() .select(kosar);
@@ -203,21 +167,7 @@ public class FXMLStudentsSceneController implements Initializable{
     public void handleChangeName(ActionEvent actionEvent) {
     }
 
-    private void showAlertWithDefaultHeaderText() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Regisztráció");
-        alert.setHeaderText("Nemsokára ehetsz, te dagadt");
-        alert.setContentText("A regisztrálás sikeres volt");
-
-        ImageView icon = new ImageView("file:C:/Users/tozso/Desktop/StudentsRegister2/alertFood.jpg");
-
-        icon.setFitHeight(200);
-        icon.setFitWidth(200);
-        alert.getDialogPane().setGraphic(icon);
-        alert.showAndWait();
-    }
     public void LognGEnyo(ActionEvent actionEvent) {
-
         int x = etteremekarray.size();
         Button[] button = new Button[x];
         for (int i = 0; i < x; i++) {
@@ -230,14 +180,27 @@ public class FXMLStudentsSceneController implements Initializable{
                     String text = "zegz";
                     text = ((Button)actionEvent.getSource()).getText();
                     init(text);
+                    // makemenufromrestaurnat(text);
                     tp.getSelectionModel().select(etterem);
                 }
             });
             etteremgrid.add(button[i],0,i);
+            button[i].setStyle("-fx-background-color: darkblue");
+            button[i].setStyle("-fx-text-fill: darkblue");
+            etteremgrid.setHgap(11);
+            etteremgrid.setVgap(11);
         }
         tp.getSelectionModel().select(etteremeink);
     }
 
+    private void makemenufromrestaurnat(String text) {
+        //EntityManager em = emf.getEntityManagerFactory().createEntityManager();
+        kajagenyok.addAll(MainApp.getFood(text));
+        menus1.getItems().addAll(kajagenyok);
+        //  List<Food> kajak =
+
+
+    }
 
 
     public void RegistforFood(ActionEvent actionEvent) {
@@ -268,24 +231,10 @@ public class FXMLStudentsSceneController implements Initializable{
         tp.getSelectionModel().select(etteremeink);
     }
 
-    public void Payout(ActionEvent actionEvent) {
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Fizetés.exe");
-        alert.setHeaderText("Köszönjük a rendelését");
-        alert.setContentText("Te dagadt");
-        ImageView icon = new ImageView("file:C:/Users/tozso/Desktop/StudentsRegister2/FizetesAlert.jpg");
-
-        icon.setFitHeight(100);
-        icon.setFitWidth(100);
-        alert.getDialogPane().setGraphic(icon);
-
-        alert.showAndWait();
-
-    }
 
     //--------------------------SEGED FÜGGVÉNYEK----------------------------------------------------------------------------
-    public void makegrid(ActionEvent actionEvent) {
+  /*  public void makegrid(ActionEvent actionEvent) {
         int count = 0;
         int j = 0;
         String asd;
@@ -303,7 +252,7 @@ public class FXMLStudentsSceneController implements Initializable{
             minusitem2(text,x);
         }
     }
-
+*/
     private String SetName(String button, int k) {
         return String.format("%s%d",button,k);
     }
@@ -316,14 +265,47 @@ public class FXMLStudentsSceneController implements Initializable{
 
     public void plusitem(ActionEvent actionEvent) {
         x++;
-        countitem.setText("Darabszám: " + x);
+        menulist.getItems().add(menus1.getValue());
+
     }
 
     public void minusitem(ActionEvent actionEvent) {
-        if (x>0) x--;
-        countitem.setText("Darabszám: " + x);
+        menulist.getItems().remove(menus1.getValue());
 
+    }
+//-------------------ALERT---------------------------
+
+    private void showAlertWithDefaultHeaderText() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Regisztráció");
+        alert.setHeaderText("Nemsokára ehetsz, te dagadt");
+        alert.setContentText("A regisztrálás sikeres volt");
+
+        ImageView icon = new ImageView("file:../SFMProjekto/images/alertFood.jpg");
+
+        icon.setFitHeight(200);
+        icon.setFitWidth(200);
+        alert.getDialogPane().setGraphic(icon);
+        alert.showAndWait();
     }
 
 
+    public void Payout(ActionEvent actionEvent) {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Fizetés.exe");
+        alert.setHeaderText("Köszönjük a rendelését");
+        alert.setContentText("Te dagadt");
+        ImageView icon = new ImageView("file:../SFMProjekto/images/FizetesAlert.jpg");
+
+        icon.setFitHeight(100);
+        icon.setFitWidth(100);
+        alert.getDialogPane().setGraphic(icon);
+
+        alert.showAndWait();
+
+    }
+
+    public void makegrid(ActionEvent actionEvent) {
+    }
 }

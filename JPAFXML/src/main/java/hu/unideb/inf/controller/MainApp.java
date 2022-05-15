@@ -7,11 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.h2.tools.Server;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,6 +56,34 @@ public class MainApp extends Application {
         }
         launch(args);
         stopDatabase();
+    }
+
+
+    public static List<Food> getEttermekkaja(String etterem_name) {
+        List<Food> kajakgenyo = new ArrayList<>();
+        for (Food k: kajak) {
+            for (Restaurant e: ettermek) {
+                if (e.getName().equals(etterem_name))
+                {
+
+                    kajakgenyo.add(k);
+                }
+            }
+        }
+        return kajakgenyo;
+    }
+    public static List<String> getFood(String etterem) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "jdbc:h2:file:~/db3_jpa_fxml" );
+        EntityManager entitymanager = emfactory.createEntityManager();
+        int x = 4;
+
+        //Scalar function
+        Query query = entitymanager.
+                createQuery("select name from food where from_restaurant = 6");
+        List list = query.getResultList();
+
+
+        return list;
     }
 
     public static List<Food> getKajak(){
