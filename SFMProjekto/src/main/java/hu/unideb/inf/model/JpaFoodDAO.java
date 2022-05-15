@@ -72,7 +72,7 @@ public class JpaFoodDAO implements FoodDAO{
     public static List<String> getapad(String etteremname){
        // JpaFoodDAO.getEntityManager().getTransaction().begin();
         TypedQuery<String> query = (TypedQuery<String>) entityManager.createQuery(
-                "select f.Food_name from Food f, Restaurant where from_restaurant = Rid AND Rname = 'Valhalla'");
+                "select f.Food_name from Food f, Restaurant where from_restaurant = Rid AND Rname = '"+etteremname+"'");
         List<String> foods = query.getResultList();
         return foods;
 
