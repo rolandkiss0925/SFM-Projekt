@@ -257,7 +257,16 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
     //Vissza lép az éttermekre
-    public void GobacktoRestaurants(ActionEvent actionEvent) {
+     public void GobacktoRestaurants(ActionEvent actionEvent) {
+
+        menus1.getItems().removeAll(kajagenyok);
+        kajagenyok.clear();
+        menus2.getItems().removeAll(italgenyok);
+        italgenyok.clear();
+        menus3.getItems().removeAll(koretgenyok);
+        koretgenyok.clear();
+
+
         tp.getSelectionModel().select(etteremeink);
     }
 
