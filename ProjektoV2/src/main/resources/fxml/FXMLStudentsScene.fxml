@@ -50,7 +50,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="Felhasználó név" textFill="#f8f6f6">
+                              <Label text="E-mail cím" textFill="#f8f6f6">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -60,8 +60,8 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField prefHeight="37.0" prefWidth="160.0" promptText="Email-cím" GridPane.columnIndex="1" />
-                              <PasswordField prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="loginNameTextBox" prefHeight="37.0" prefWidth="160.0" promptText="E-mail cím" GridPane.columnIndex="1" />
+                              <PasswordField fx:id="loginPwdTextBox" prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>
@@ -105,11 +105,12 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField promptText="Email-cím" GridPane.columnIndex="1" />
+                              <TextField fx:id="regEmailTextBox" promptText="Email-cím" GridPane.columnIndex="1" />
                               <TextField promptText="Név" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <PasswordField promptText="Titkos jelszó" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <PasswordField fx:id="regPwdTextBox" promptText="Titkos jelszó" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
+                        <Button fx:id="back2Login" layoutX="517.0" layoutY="523.0" mnemonicParsing="false" onAction="#back2Login" text="Vissza a bejelentkezéshez" />
                      </children>
                   </AnchorPane>
                </content>

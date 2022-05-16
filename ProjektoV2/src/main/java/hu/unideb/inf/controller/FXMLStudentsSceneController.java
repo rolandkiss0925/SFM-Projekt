@@ -1,9 +1,6 @@
 package hu.unideb.inf.controller;
 
-import hu.unideb.inf.model.Food;
-import hu.unideb.inf.model.JpaFoodDAO;
-import hu.unideb.inf.model.Model;
-import hu.unideb.inf.model.Restaurant;
+import hu.unideb.inf.model.*;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -17,6 +14,7 @@ import javafx.scene.layout.GridPane;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceUnit;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -64,6 +62,18 @@ public class FXMLStudentsSceneController implements Initializable{
 
     @FXML
     private Label totalPrice;
+
+    @FXML
+    private TextField loginNameTextBox;
+
+    @FXML
+    private TextField loginPwdTextBox;
+
+    @FXML
+    private TextField regEmailTextBox;
+
+    @FXML
+    private TextField regPwdTextBox;
 
     List<Node> nodes = new ArrayList<>();
 
@@ -160,31 +170,42 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
     public void LognGEnyo(ActionEvent actionEvent) {
-        int x = etteremekarray.size();
-        Button[] button = new Button[x];
-        for (int i = 0; i < x; i++) {
-            button[i] = new Button();
-            button[i].setText(SetName2(etteremekarray.get(i)));
-            button[i].setId(SetName(etteremekarray.get(i),i));
-            button[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    String text = "zegz";
-                    text = ((Button)actionEvent.getSource()).getText();
-                    init(text);
-                    makemenufromrestaurnat(text);
-                    makedrinkfromrestaurnat(text);
-                    makekoretfromrestaurnat(text);
-                    tp.getSelectionModel().select(etterem);
-                }
-            });
-            etteremgrid.add(button[i],0,i);
-            button[i].setStyle("-fx-background-color: darkblue");
-            button[i].setStyle("-fx-text-fill: darkblue");
-            etteremgrid.setHgap(11);
-            etteremgrid.setVgap(11);
+        Users felhasznalo = new Users(loginNameTextBox.getText(), loginPwdTextBox.getText());
+        if (doesUserExists(felhasznalo)){
+            int x = etteremekarray.size();
+            Button[] button = new Button[x];
+            for (int i = 0; i < x; i++) {
+                button[i] = new Button();
+                button[i].setText(SetName2(etteremekarray.get(i)));
+                button[i].setId(SetName(etteremekarray.get(i),i));
+                button[i].setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        String text = "zegz";
+                        text = ((Button)actionEvent.getSource()).getText();
+                        init(text);
+                        makemenufromrestaurnat(text);
+                        makedrinkfromrestaurnat(text);
+                        makekoretfromrestaurnat(text);
+                        tp.getSelectionModel().select(etterem);
+                    }
+                });
+                etteremgrid.add(button[i],0,i);
+                button[i].setStyle("-fx-background-color: darkblue");
+                button[i].setStyle("-fx-text-fill: darkblue");
+                etteremgrid.setHgap(11);
+                etteremgrid.setVgap(11);
+            }
+            tp.getSelectionModel().select(etteremeink);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hiba");
+            alert.setHeaderText("E-mail cím vagy jelszó helytelen!");
+            alert.showAndWait();
         }
-        tp.getSelectionModel().select(etteremeink);
+
+
+
     }
     private void makedrinkfromrestaurnat(String text) {
         italgenyok.addAll(JpaFoodDAO.getdrink(text));
@@ -219,8 +240,11 @@ public class FXMLStudentsSceneController implements Initializable{
     }
     //Vissza lép regisztráció után a Login oldalra
     public void GobackForLogin(ActionEvent actionEvent) {
-        showAlertWithDefaultHeaderText();
-        tp.getSelectionModel().select(Login);
+        Users u = new Users(regEmailTextBox.getText(), regPwdTextBox.getText());
+        registUserToCSV(u);
+
+        //showAlertWithDefaultHeaderText();
+        //tp.getSelectionModel().select(Login);
     }
 
     public void Restaurant(MouseEvent mouseEvent) {
@@ -237,6 +261,9 @@ public class FXMLStudentsSceneController implements Initializable{
         tp.getSelectionModel().select(etteremeink);
     }
 
+    public void back2Login(ActionEvent actionEvent){
+        tp.getSelectionModel().select(Login);
+    }
 
     //--------------------------SEGED FÜGGVÉNYEK----------------------------------------------------------------------------
     private String SetName(String button, int k) {return String.format("%s%d",button,k);}
@@ -283,5 +310,67 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
     public void makegrid(ActionEvent actionEvent) {
+    }
+
+    public List<Users> readAllUsersFromCSV(){
+        List<Users> result = new ArrayList<>();
+        try {
+            Scanner sc = new Scanner(new File("src/main/java/hu/unideb/inf/controller/user_data.csv"));
+            while (sc.hasNextLine()){
+                String line = sc.nextLine();
+                String[] token = line.split(";");
+                Users u = new Users(token[0], token[1]);
+                result.add(u);
+            }
+        }
+        catch (FileNotFoundException e){
+            System.out.println("User database not found! Exception: " + e);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hiba");
+            alert.setHeaderText("User database not found! Exception: " + e);
+            alert.showAndWait();
+            return null;
+        }
+        return result;
+    }
+
+    public boolean doesUserExists(Users u1){
+        List<Users> usersList = readAllUsersFromCSV();
+        return usersList.contains(u1);
+    }
+
+    public List<String> getAllUserNames(){
+        List<String> res = new ArrayList<>();
+        List<Users> usersList = readAllUsersFromCSV();
+        for (Users u:usersList
+        ) {
+            res.add(u.getName());
+        }
+
+        return res;
+    }
+
+    public void registUserToCSV(Users u){
+        if (!doesUserExists(u) && !getAllUserNames().contains(u.getName())){
+            try {
+                File f =new File("src/main/java/hu/unideb/inf/controller/user_data.csv");
+                FileWriter fw = new FileWriter(f, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.newLine();
+                bw.write(u.getName() + ";" + u.getPassword());
+
+                bw.close();
+                showAlertWithDefaultHeaderText();
+            }
+            catch (IOException e){
+                System.out.println("File not found! Exception: " + e);
+            }
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hiba");
+            alert.setHeaderText("Ez a felhasználónév már foglalt!");
+            alert.showAndWait();
+        }
     }
 }
