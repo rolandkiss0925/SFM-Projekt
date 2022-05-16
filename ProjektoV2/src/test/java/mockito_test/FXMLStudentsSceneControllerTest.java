@@ -57,4 +57,21 @@ public class FXMLStudentsSceneControllerTest {
     public void nullUserShouldNotExist() {
     Assertions.assertEquals(FXMLStudentsSceneController.doesUserExists(new Users(null, null)), false);
     }
+
+    @Test
+    public void SetNameShouldReturnCorrectFormat() {
+        String expected = String.format("%s%d","Alma",2);
+        Assertions.assertEquals(expected, FXMLStudentsSceneController.SetName("Alma", 2));
+    }
+
+    @Test
+    public void SetName2ShouldReturnCorrectFormat() {
+        String expected = String.format("%s", "Alma");
+        Assertions.assertEquals(expected, FXMLStudentsSceneController.SetName2("Alma"));
+    }
+
+//    @Test
+//    public void getAllUserNamesShouldReturnStringList() {
+//
+//    }
 }

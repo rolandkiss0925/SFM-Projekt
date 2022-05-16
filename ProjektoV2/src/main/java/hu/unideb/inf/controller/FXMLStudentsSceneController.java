@@ -258,6 +258,15 @@ public class FXMLStudentsSceneController implements Initializable{
 
     //Vissza lép az éttermekre
     public void GobacktoRestaurants(ActionEvent actionEvent) {
+
+        menus1.getItems().removeAll(kajagenyok);
+        kajagenyok.clear();
+        menus2.getItems().removeAll(italgenyok);
+        italgenyok.clear();
+        menus3.getItems().removeAll(koretgenyok);
+        koretgenyok.clear();
+
+
         tp.getSelectionModel().select(etteremeink);
     }
 
@@ -266,8 +275,8 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
     //--------------------------SEGED FÜGGVÉNYEK----------------------------------------------------------------------------
-    private String SetName(String button, int k) {return String.format("%s%d",button,k);}
-    private String SetName2(String s) {return String.format("%s",s);}
+    public static String SetName(String button, int k) {return String.format("%s%d",button,k);}
+    public static String SetName2(String s) {return String.format("%s",s);}
 
     public void plusitem(ActionEvent actionEvent) {menulist.getItems().add(menus1.getValue());}
     public void plusitem2(ActionEvent actionEvent) {menulist.getItems().add(menus2.getValue()); }
