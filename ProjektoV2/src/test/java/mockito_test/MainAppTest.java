@@ -36,20 +36,6 @@ public class MainAppTest {
     public void tearDown() {
     }
 
-    @Test
-    public void handleDataShouldReturnReturnSQLException() {
-        /*
-        Assertions.assertThrows(Exception.class, () -> {
-            new Person(-10, "Adam");
-        });
-        */
-        FoodDAO fDAO = new FileFoodDAO();
-
-        Assertions.assertThrows(SQLException.class, () -> {
-
-        });
-    }
-
     // Itt jonnek a tesztelendo metodusok
     @Test
     public void getEttermekShouldReturnEttermek() {

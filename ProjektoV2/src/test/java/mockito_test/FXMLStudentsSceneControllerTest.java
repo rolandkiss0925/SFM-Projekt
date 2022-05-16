@@ -16,9 +16,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class FXMLStudentsSceneControllerTest {
-    //@Mock
-
-
     @BeforeAll //@BeforeClass
     public static void setUpClass() {
     }
@@ -69,9 +66,4 @@ public class FXMLStudentsSceneControllerTest {
         String expected = String.format("%s", "Alma");
         Assertions.assertEquals(expected, FXMLStudentsSceneController.SetName2("Alma"));
     }
-
-//    @Test
-//    public void getAllUserNamesShouldReturnStringList() {
-//
-//    }
 }
