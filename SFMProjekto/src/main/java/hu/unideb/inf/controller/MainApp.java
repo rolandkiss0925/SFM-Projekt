@@ -41,7 +41,7 @@ public class MainApp extends Application {
 
         try(FoodDAO fDAO = new JpaFoodDAO();) {
             handleData(fDAO);
-         //   kajak = fDAO.getFoods();
+            kajak = fDAO.getFoods();
             ettermek = fDAO.getRestaurants();
         } catch (SQLException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,6 +51,9 @@ public class MainApp extends Application {
         stopDatabase();
     }
 
+    public static List<Food> getKajak(){
+        return kajak;
+    }
 
     public static List<Restaurant> getEttermek() {
         return ettermek;
@@ -73,26 +76,31 @@ public class MainApp extends Application {
                 String[] tomb = sor.split(";");
                 if (etterem.equals(tomb[0])) {
 
-                    Food etel = new Food();
-                    etel.setType(Food.Type.ETEL);
-                    etel.setName(tomb[1]);
-                    etel.setPrice(Integer.parseInt(tomb[3]));
-                    etel.setDb(1);
-                    r.getFoods().add(etel);
+                    if (!(tomb[1].equals(""))) {
+                        Food etel = new Food();
+                        etel.setType(Food.Type.ETEL);
+                        etel.setName(tomb[1]);
+                        etel.setPrice(Integer.parseInt(tomb[3]));
+                        etel.setDb(1);
+                        r.getFoods().add(etel);
+                    }
+                    if (!(tomb[2].equals(""))) {
+                        Drink ital = new Drink();
+                        ital.setType(Food.Type.ITAL);
+                        ital.setName(tomb[2]);
+                        ital.setPrice(Integer.parseInt(tomb[4]));
+                        ital.setDb(1);
+                        r.getFoods().add(ital);
+                    }
 
-                    Drink ital = new Drink();
-                    ital.setType(Food.Type.ITAL);
-                    ital.setName(tomb[2]);
-                    ital.setPrice(Integer.parseInt(tomb[4]));
-                    ital.setDb(1);
-                    r.getFoods().add(ital);
-
-                    Garnish koret = new Garnish();
-                    koret.setType(Food.Type.KORET);
-                    koret.setName(tomb[5]);
-                    koret.setPrice(Integer.parseInt(tomb[6]));
-                    koret.setDb(1);
-                    r.getFoods().add(koret);
+                    if (!(tomb[5].equals(""))) {
+                        Garnish koret = new Garnish();
+                        koret.setType(Food.Type.KORET);
+                        koret.setName(tomb[5]);
+                        koret.setPrice(Integer.parseInt(tomb[6]));
+                        koret.setDb(1);
+                        r.getFoods().add(koret);
+                    }
 
                     i++;
                 }

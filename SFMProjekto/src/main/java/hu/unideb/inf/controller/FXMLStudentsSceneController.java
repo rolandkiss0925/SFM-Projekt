@@ -1,11 +1,9 @@
 package hu.unideb.inf.controller;
 
-import hu.unideb.inf.model.Food;
-import hu.unideb.inf.model.JpaFoodDAO;
-import hu.unideb.inf.model.Model;
-import hu.unideb.inf.model.Restaurant;
+import hu.unideb.inf.model.*;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,6 +56,141 @@ public class FXMLStudentsSceneController implements Initializable{
     @FXML
     private ChoiceBox<String> myChoiceBox;
 
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private Label biztos;
+
+    @FXML
+    private GridPane kosargrid;
+
+    @FXML
+    private Label totalPrice;
+
+    @FXML
+    public void handleLoadButtonPushed(ActionEvent event) {
+
+        biztos.setText("");
+
+        for (Restaurant r : MainApp.getEttermek())
+            if (r.getName().equals(etterem_nev.getText()))
+                for (var f : r.getFoods()){
+                    int darab = 0;
+                    for (String s : menulist.getItems())
+                        if (s.equals(f.getName()))
+                            darab++;
+                    f.setDb(darab);
+                    }
+
+        kosargrid.getChildren().clear();
+
+        int i = 0;
+        final int[] total = {0};
+        for (Restaurant r : MainApp.getEttermek()) {
+            if (r.getName().equals(etterem_nev.getText())) {
+                List<String> addedFoods = new ArrayList<>();
+                for (String s : menulist.getItems()) {
+                    for (Food f : r.getFoods()) {
+                        if (s.equals(f.getName())) {
+
+                            Label name = new Label();
+                            Label db = new Label();
+                            Label price = new Label();
+
+                            if (!(addedFoods.contains(s))) {
+
+                                name.setText(f.getName());
+                                name.setPrefSize(250, 125);
+                                name.setStyle("-fx-font-size: 24 px; -fx-text-fill: white");
+
+                                db.setText(f.getDb() + "");
+                                db.setStyle("-fx-font-size: 24 px; -fx-text-fill: white");
+
+                                int baseprice = f.getPrice();
+                                price.setText(baseprice * f.getDb() + " Ft");
+                                price.setStyle("-fx-font-size: 24 px; -fx-text-fill: white");
+
+                                Button min = new Button("-");
+                                int finalI = i;
+                                min.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent actionEvent) {
+
+                                        if (f.getClass().equals(Food.class)) {
+                                            menus1.setValue(name.getText());
+                                            minusitem(actionEvent);
+                                        }
+                                        else if (f.getClass().equals(Drink.class)) {
+                                            menus2.setValue(name.getText());
+                                            minusitem2(actionEvent);
+                                        }
+                                        else if (f.getClass().equals(Garnish.class)) {
+                                            menus3.setValue(name.getText());
+                                            minusitem3(actionEvent);
+                                        }
+
+                                        total[0] -= baseprice;
+                                        totalPrice.setText(total[0] + " Ft");
+                                        f.setDb(f.getDb() - 1);
+                                        db.setText(f.getDb() + "");
+                                        price.setText(baseprice * f.getDb() + " Ft");
+                                        if (f.getDb() == 0) {
+                                            kosargrid.getChildren().removeIf(n -> GridPane.getRowIndex(n) == finalI);
+                                        }
+                                        if (f.getDb() >= 10)
+                                            biztos.setText("( ͡° ͜ʖ ͡°)");
+                                        else
+                                            biztos.setText("");
+                                    }
+                                });
+
+                                Button plus = new Button("+");
+                                plus.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent actionEvent) {
+
+                                        if (f.getClass().equals(Food.class)) {
+                                            menus1.setValue(name.getText());
+                                            plusitem(actionEvent);
+                                        }
+                                        else if (f.getClass().equals(Drink.class)){
+                                            menus2.setValue(name.getText());
+                                            plusitem2(actionEvent);
+                                        }
+                                        else if (f.getClass().equals(Garnish.class)) {
+                                            menus3.setValue(name.getText());
+                                            plusitem3(actionEvent);
+                                        }
+
+                                        total[0] += baseprice;
+                                        totalPrice.setText(total[0] + " Ft");
+                                        f.setDb(f.getDb() + 1);
+                                        price.setText(baseprice * f.getDb() + " Ft");
+                                        db.setText(f.getDb() + "");
+                                        if (f.getDb() >= 10)
+                                            biztos.setText("( ͡° ͜ʖ ͡°)");
+                                        else
+                                            biztos.setText("");
+                                    }
+                                });
+
+                                total[0] += Integer.parseInt(price.getText().split(" ")[0]);
+
+                                totalPrice.setText(total[0] + " Ft");
+
+                                kosargrid.addRow(i, name, min, db, plus, price);
+                                i++;
+
+                                addedFoods.add(name.getText());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private final List<String> etteremekarray =  new ArrayList<>();
     private final List<String> kajagenyok = new ArrayList<String>();
     private final List<String> italgenyok = new ArrayList<String>();
@@ -98,6 +231,7 @@ public class FXMLStudentsSceneController implements Initializable{
             etteremgrid.add(button[i],0,i);
             button[i].setStyle("-fx-background-color: darkblue");
             button[i].setStyle("-fx-text-fill: darkblue");
+            button[i].setPrefSize(100, 50);
             etteremgrid.setHgap(11);
             etteremgrid.setVgap(11);
         }
@@ -114,7 +248,7 @@ public class FXMLStudentsSceneController implements Initializable{
     private void makemenufromrestaurnat(String text) {
         kajagenyok.addAll(JpaFoodDAO.getfood(text));
         for (String s:kajagenyok) {
-             menus1.getItems().add(String.valueOf(s));
+            menus1.getItems().add(String.valueOf(s));
         }
     }
 
@@ -131,7 +265,7 @@ public class FXMLStudentsSceneController implements Initializable{
 
     //Beállítja a felsőlécet a kiválasztott étterem nevére
     private EventHandler<ActionEvent> init(String text) {
-        etterem_nev.setText("\t\t\t"+text);
+        etterem_nev.setText(text);
         return null;
     }
     //Vissza lép regisztráció után a Login oldalra
@@ -145,17 +279,41 @@ public class FXMLStudentsSceneController implements Initializable{
 
     //Kosar oldalára lép
     public void Gotokosar(ActionEvent actionEvent) {
+        handleLoadButtonPushed(actionEvent);
         tp.getSelectionModel().select(kosar);
     }
 
     //Vissza lép az éttermekre
     public void GobacktoRestaurants(ActionEvent actionEvent) {
+
+        menus1.getItems().removeAll(kajagenyok);
+        kajagenyok.clear();
+        menus2.getItems().removeAll(italgenyok);
+        italgenyok.clear();
+        menus3.getItems().removeAll(koretgenyok);
+        koretgenyok.clear();
+
+        menulist.getItems().clear();
+
+        kosargrid.getChildren().clear();
+
+        totalPrice.setText("");
+
         tp.getSelectionModel().select(etteremeink);
+    }
+
+    public void goBackToRest(ActionEvent actionEvent){
+        tp.getSelectionModel().select(etterem);
+    }
+
+    public void handleLogOut(ActionEvent actionEvent){
+        GobacktoRestaurants(actionEvent);
+        tp.getSelectionModel().select(Login);
     }
 
 
     //--------------------------SEGED FÜGGVÉNYEK----------------------------------------------------------------------------
-     private String SetName(String button, int k) {return String.format("%s%d",button,k);}
+    private String SetName(String button, int k) {return String.format("%s%d",button,k);}
     private String SetName2(String s) {return String.format("%s",s);}
 
     public void plusitem(ActionEvent actionEvent) {menulist.getItems().add(menus1.getValue());}
@@ -201,4 +359,3 @@ public class FXMLStudentsSceneController implements Initializable{
     public void makegrid(ActionEvent actionEvent) {
     }
 }
-

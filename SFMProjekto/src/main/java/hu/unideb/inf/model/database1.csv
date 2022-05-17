@@ -1,34 +1,68 @@
-Árpád burger;Retro Burger;Coca-Cola;790;590;Hasábburgonya;690
-Árpád Burger;Burger;Víz;690;490;Kukoricás rizs;690
-Árpád Burger;Retro;Sprite;790;590;Rácsos burgonya;690
+Árpád Burger;Retro Burger;Coca-Cola;790;590;Hasábburgonya;690
+Árpád Burger;Dupla Burger;Víz;690;490;Kukoricás rizs;690
+Árpád Burger;Vega Burger;Sprite;790;590;Rácsos burgonya;690
+Árpád Burger;;Coca-Cola;;610;Chipotle szósz;380;
+Árpád Burger;;Limonádé;;750;;;;;;;;;a
 Valhalla;Gyros tál;Fanta;1500;590;Burgonyapüré;650
-Valhalla;Gyros pitában;Schweppes;1050;590;Saláta;450
+Valhalla;Gyros pitában;Schweppes;1050;590;;;;;;;a
 Valhalla;Bolognai pizza;Finlandia;1350;1190;Édesburgonya hasábok;790
 Valhalla;Sajtburger;Fuze Tea;870;550;Cheddar szószos hasábburgonya;890
+Valhalla;;Csapolt sör;;600;;;;;;;a
 Házi ízek;Töltött Káposzta;Barack Pálinka;1540;2290;Grill zöldség;550
 Házi ízek;Cigánypecsenye;Jack Daniels;2150;1390;Héjában sült burgonya;750
-Házi ízek;Sertéstokány;7-Up;1690;590;Rizs;350;Rácsos burgonya;690
-Ibolyka pesszó;Nachos;Kacsa;450;800;Fűszeres burgonyagerezd;690
-Ibolyka pesszó;Chips;Kőbányai;350;400;Sajtkrémmel töltött röszti;440
-Ibolyka pesszó;Tepertős Pogácsa;Soproni;540;450;Amerikai burgonya;740
+Házi ízek;Sertéstokány;7-Up;1690;590;Rácsos burgonya;690
+Házi ízek;;Frissen préselt almalé;;200;Főtt Pityóka;600
+Házi ízek;;;;;Rizibizi;810
+Ibolyka presszó;Nachos;Kacsa;450;800;Fűszeres burgonyagerezd;690
+Ibolyka presszó;Chips;Kőbányai;350;400;Sajtkrémmel töltött röszti;440
+Ibolyka presszó;Tepertős Pogácsa;Soproni;540;450;;;;;;;a
+Ibolyka presszó;;Csapolt sör;;450;;;;;;;a
+Ibolyka presszó;;Kóla;;450;;;;;;a
 Sajtos Ház;Sajtburger;Sprite;790;590;Sajtmártás;450
 Sajtos Ház;Sajtos Pogácsa;Dr Pepper;430;620;Kenyérszelet (Teljes kiörlésű kenyérből);75
+Sajtos Ház;Mac and Cheese;Coca-Cola;1250;600;Sült burgonya;400
+Sajtos Ház;Sajtos croissant XL;Coca-Cola Zero;640;600;Kemencés spéci sajtos burgonya;700
 Fácánkakas;Hot-Dog;Fuze Tea;850;550;Csípős gyros szósz;450
-Fácánkakas;Fish and chips;Kinley;1650;620;Kenyérszelet (Teljes kiörlésű kenyérből);75
+Fácánkakas;Fish and chips;Kinley;1650;620;Kenyérszelet;75
+Fácánkakas;Sonkás pizza;Csapolt sör;1210;400;Fokhagyma szósz;330
+Fácánkakas;Lay's paprikás;Whiskey-kóla;430;700;;;;;a
 Szmöre Burger;Óriás Hamburger;Ásványvíz;1590;510;Grillezett zöldség;750
 Szmöre Burger;Sajtburger;Fuze Tea;950;550;Kenyérszelet;50
 Szmöre Burger;Tortilla csirkemellel;Mirinda;1250;450;Tartármártás;350
+Szmöre Burger;Fit vega burger;Coca-Cola;2100;510;;;;a
+Szmöre Burger;Dupla sajtburger;;1780;;;;;a
+Szmöre Burger;Pulled beef burger;;1860;;;;;a
 Both-Dega;Gyros pitában;Cappy Pulpy;1050;650;Grillezett zöldség;750
 Both-Dega;Hot-Dog;Lipton Ice tea;990;590;Pirítós;150
+Both-Dega;Hamburger;Pepsi;850;320;Sült burgonya;400
+Both-Dega;Csirkés sandwich;;780;;;;;;a
 Grande Bosco;Bolognai pizza;Schweppes;1350;590;Fokhagymás tejföl;350
 Grande Bosco;Rántott sajt;Borsodi;1500;450;Majonéz;300
+Grande Bosco;Prosciutto pizza;Limonádé;1800;740;Amerikai burgonya;650
+Grande Bosco;Son-go-ku pizza;Coca-Cola citromos;1830;610;Ketchup;280
+Grande Bosco;Margharita pizza;Szénsavmentes Szentkirályi;1580;180;;;;;a
+Grande Bosco;;Almalé;;400;;;;;a
 Calico Jack Pub;Magyaros pizza;Finlandia;1450;1190;Vegyes köret;890
 Calico Jack Pub;Gyros tál;Martini;1500;1090;Tejföl;250
 Calico Jack Pub;Sertés flekken;Rauch ice tea;3590;650;Mustár;250
-McDonald's;Big Mac;Lipton Ice tea;1080;590;Kenyérszelet (Teljes kiörlésű kenyérből);75
-McDonald's;Nuggets;Tea;1010;500;Rácsos burgonya;690
+Calico Jack Pub;Napi menü;Coca-Cola;1900;450;;;;;;a
+Calico Jack Pub;;Coca-Cola Zero;;450;;;;;;a
+Calico Jack Pub;;Pepsi Twist;;390;;;;;;;a
+McDonalds;Big Mac;Lipton Ice tea;1080;590;Kenyérszelet (Teljes kiörlésű kenyérből);75
+McDonalds;McNuggets;Víz;1010;500;Rácsos burgonya;690
+McDonalds;Cheeseburger;Kóla;530;300;Sült burgonya;400
+McDonalds;Chickenburger;;520;;Krokett;500
+McDonalds;Brutal Brutus menü;;2650;;;;;;a
 Burger King;Whopper;Kinley;1190;620;Cézár öntet;450
 Burger King;Bacon King;Pepsi;1990;580;Pirítós;150
 Burger King;Chili Cheese Burger;Bodza szörp;440;650;Ketchup;250
+Burger King;Deluxe Burger;;2060;;Sült burgonya;390
+Burger King;Texas Burger;;1230;;;;;;a
+Burger King;Cheeseburger;;600;;;;;;a
 KFC;Dupla Zinger;Mirinda;2140;450;Olívaolaj;450
 KFC;Grander;Sprite;1740;590;Vegyes köret;890
+KFC;Twister;Kóla;1300;610;Sült burgonya;410
+KFC;Crispy Strips 5 db;Kóla Zero;1400;610;Fokhagymás szósz;310
+KFC;Crispy Strips 8 db;;2050;;Ketchup;260
+KFC;Hot Wings;;1460;;Majonéz;250
+KFC;Kentucky Gold Wrapper;;1870;;;;;;;a

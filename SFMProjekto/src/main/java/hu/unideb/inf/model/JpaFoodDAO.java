@@ -39,7 +39,7 @@ public class JpaFoodDAO implements FoodDAO{
     @Override
     public List<Food> getFoods() {
         TypedQuery<Food> query = entityManager.createQuery(
-                "SELECT f.name FROM Food f", Food.class);
+                "SELECT f FROM Food f", Food.class);
         List<Food> foods = query.getResultList();
         return foods;
     }
