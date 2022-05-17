@@ -2,8 +2,10 @@ package hu.unideb.inf.controller;
 
 import hu.unideb.inf.model.*;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,15 +13,23 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView ;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceUnit;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
+
+import static java.lang.StrictMath.round;
 
 public class FXMLStudentsSceneController implements Initializable{
     private Model model;
     private Food foods;
+
+    private static boolean isAdSuccess = false;
+    private static boolean cuponApplied = false;
 
     private EventHandler<ActionEvent> GoToEtterem;
 
@@ -67,6 +77,21 @@ public class FXMLStudentsSceneController implements Initializable{
 
     @FXML
     private Label totalPrice;
+
+    @FXML
+    private TextField loginNameTextBox;
+
+    @FXML
+    private TextField loginPwdTextBox;
+
+    @FXML
+    private TextField regEmailTextBox;
+
+    @FXML
+    private TextField regPwdTextBox;
+
+    @FXML
+    private Button watchAdButton;
 
     @FXML
     public void handleLoadButtonPushed(ActionEvent event) {
@@ -201,6 +226,8 @@ public class FXMLStudentsSceneController implements Initializable{
         for (Restaurant r : MainApp.getEttermek()){
             etteremekarray.add(r.getName());
         }
+        tp.setTabMinHeight(-10);
+        tp.setTabMaxHeight(-10);
     }
     @FXML
     void handleButtonPushed(){
@@ -209,33 +236,47 @@ public class FXMLStudentsSceneController implements Initializable{
     public void handleChangeName(ActionEvent actionEvent) {
     }
 
+    public void back2Login(ActionEvent actionEvent){
+        tp.getSelectionModel().select(Login);
+    }
+
     public void LognGEnyo(ActionEvent actionEvent) {
-        int x = etteremekarray.size();
-        Button[] button = new Button[x];
-        for (int i = 0; i < x; i++) {
-            button[i] = new Button();
-            button[i].setText(SetName2(etteremekarray.get(i)));
-            button[i].setId(SetName(etteremekarray.get(i),i));
-            button[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    String text = "zegz";
-                    text = ((Button)actionEvent.getSource()).getText();
-                    init(text);
-                    makemenufromrestaurnat(text);
-                    makedrinkfromrestaurnat(text);
-                    makekoretfromrestaurnat(text);
-                    tp.getSelectionModel().select(etterem);
-                }
-            });
-            etteremgrid.add(button[i],0,i);
-            button[i].setStyle("-fx-background-color: darkblue");
-            button[i].setStyle("-fx-text-fill: darkblue");
-            button[i].setPrefSize(100, 50);
-            etteremgrid.setHgap(11);
-            etteremgrid.setVgap(11);
+         Users felhasznalo = new Users(loginNameTextBox.getText(), loginPwdTextBox.getText());
+        if (doesUserExists(felhasznalo)){
+            int x = etteremekarray.size();
+            Button[] button = new Button[x];
+            for (int i = 0; i < x; i++) {
+                button[i] = new Button();
+                button[i].setText(SetName2(etteremekarray.get(i)));
+                button[i].setId(SetName(etteremekarray.get(i),i));
+                button[i].setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        String text = "zegz";
+                        text = ((Button)actionEvent.getSource()).getText();
+                        init(text);
+                        makemenufromrestaurnat(text);
+                        makedrinkfromrestaurnat(text);
+                        makekoretfromrestaurnat(text);
+                        tp.getSelectionModel().select(etterem);
+                    }
+                });
+                etteremgrid.add(button[i],0,i);
+                button[i].setStyle("-fx-background-color: darkblue");
+                button[i].setStyle("-fx-text-fill: darkblue");
+                button[i].setPrefSize(100, 50);
+                etteremgrid.setHgap(11);
+                etteremgrid.setVgap(11);
+            }
+            tp.getSelectionModel().select(etteremeink);
         }
-        tp.getSelectionModel().select(etteremeink);
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hiba");
+            alert.setHeaderText("E-mail cím vagy jelszó helytelen!");
+            alert.showAndWait();
+        }
+
     }
     private void makedrinkfromrestaurnat(String text) {
         italgenyok.addAll(JpaFoodDAO.getdrink(text));
@@ -270,8 +311,11 @@ public class FXMLStudentsSceneController implements Initializable{
     }
     //Vissza lép regisztráció után a Login oldalra
     public void GobackForLogin(ActionEvent actionEvent) {
-        showAlertWithDefaultHeaderText();
-        tp.getSelectionModel().select(Login);
+        Users u = new Users(regEmailTextBox.getText(), regPwdTextBox.getText());
+        registUserToCSV(u);
+
+        //showAlertWithDefaultHeaderText();
+        //tp.getSelectionModel().select(Login);
     }
 
     public void Restaurant(MouseEvent mouseEvent) {
@@ -280,6 +324,7 @@ public class FXMLStudentsSceneController implements Initializable{
     //Kosar oldalára lép
     public void Gotokosar(ActionEvent actionEvent) {
         handleLoadButtonPushed(actionEvent);
+
         tp.getSelectionModel().select(kosar);
     }
 
@@ -303,7 +348,10 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
     public void goBackToRest(ActionEvent actionEvent){
+        isAdSuccess = false;
+        cuponApplied = false;
         tp.getSelectionModel().select(etterem);
+
     }
 
     public void handleLogOut(ActionEvent actionEvent){
@@ -340,13 +388,19 @@ public class FXMLStudentsSceneController implements Initializable{
         alert.showAndWait();
     }
 
+    public int getRandomNumberUsingNextInt(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
+    }
+
     //Rendelés leadása utáni felugró ablak
     public void Payout(ActionEvent actionEvent) {
+        int r = getRandomNumberUsingNextInt(2,13)*5;
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Fizetés.exe");
         alert.setHeaderText("Köszönjük a rendelését");
-        alert.setContentText("Te dagadt");
+        alert.setContentText(String.format("Kiszállítási idő: kb. %d perc", r));
         ImageView icon = new ImageView("file:../SFMProjekto/images/FizetesAlert.jpg");
 
         icon.setFitHeight(100);
@@ -358,4 +412,104 @@ public class FXMLStudentsSceneController implements Initializable{
 
     public void makegrid(ActionEvent actionEvent) {
     }
+
+    public void watchAdButton_Pressed(ActionEvent actionEvent) throws IOException {
+        if (!cuponApplied){
+            FXMLLoader loader = new FXMLLoader(AdWindowController.class.getResource("/fxml/AdWindow.fxml"));
+            Scene scene = new Scene(loader.load());
+            ((AdWindowController)loader.getController()).setModel(new Model());
+            Stage stage = new Stage();
+            stage.setTitle("Watch Ad");
+            stage.setScene(scene);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setOnHidden(e -> AdWindowController.shutdown());
+            //stage.initOwner(watchAdButton.getScene().getWindow());
+            stage.show();
+        }
+    }
+
+    public void applyCupon_pushed(ActionEvent actionEvent){
+        if (isAdSuccess){
+            int ujAr = round( Integer.parseInt(totalPrice.getText().split(" ")[0]) * 0.95f);
+            totalPrice.setText(ujAr + " Ft");
+            cuponApplied = true;
+        }
+        isAdSuccess = false;
+    }
+
+    public static void adFinished(int timeWatched){
+        if (timeWatched >= 10){
+            isAdSuccess = true;
+        }
+        else{
+            isAdSuccess = false;
+        }
+        //int ujAr = round( Integer.parseInt(totalPrice.getText().split(" ")[0]) * 0.95f);
+        //totalPrice.setText(ujAr + " Ft");
+    }
+
+
+    public List<Users> readAllUsersFromCSV(){
+        List<Users> result = new ArrayList<>();
+        try {
+            Scanner sc = new Scanner(new File("src/main/java/hu/unideb/inf/controller/user_data.csv"));
+            while (sc.hasNextLine()){
+                String line = sc.nextLine();
+                String[] token = line.split(";");
+                Users u = new Users(token[0], token[1]);
+                result.add(u);
+            }
+        }
+        catch (FileNotFoundException e){
+            System.out.println("User database not found! Exception: " + e);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hiba");
+            alert.setHeaderText("User database not found! Exception: " + e);
+            alert.showAndWait();
+            return null;
+        }
+        return result;
+    }
+
+    public boolean doesUserExists(Users u1){
+        List<Users> usersList = readAllUsersFromCSV();
+        return usersList.contains(u1);
+    }
+
+    public List<String> getAllUserNames(){
+        List<String> res = new ArrayList<>();
+        List<Users> usersList = readAllUsersFromCSV();
+        for (Users u:usersList
+        ) {
+            res.add(u.getName());
+        }
+
+        return res;
+    }
+
+    public void registUserToCSV(Users u){
+        if (!doesUserExists(u) && !getAllUserNames().contains(u.getName())){
+            try {
+                File f =new File("src/main/java/hu/unideb/inf/controller/user_data.csv");
+                FileWriter fw = new FileWriter(f, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.newLine();
+                bw.write(u.getName() + ";" + u.getPassword());
+
+                bw.close();
+                showAlertWithDefaultHeaderText();
+            }
+            catch (IOException e){
+                System.out.println("File not found! Exception: " + e);
+            }
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hiba");
+            alert.setHeaderText("Ez a felhasználónév már foglalt!");
+            alert.showAndWait();
+        }
+    }
+
+
 }

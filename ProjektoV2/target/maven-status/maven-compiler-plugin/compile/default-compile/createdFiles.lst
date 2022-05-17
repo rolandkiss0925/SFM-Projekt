@@ -9,6 +9,7 @@ hu\unideb\inf\controller\FXMLStudentsSceneController$1.class
 hu\unideb\inf\model\FileUtils.class
 hu\unideb\inf\model\Users.class
 hu\unideb\inf\model\Garnish.class
+hu\unideb\inf\controller\AdWindowController.class
 hu\unideb\inf\model\Model.class
 hu\unideb\inf\model\Food.class
 hu\unideb\inf\model\FileFoodDAO.class

@@ -48,7 +48,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="Felhasználó név" textFill="#f8f6f6">
+                              <Label text="E-mail cím" textFill="#f8f6f6">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -58,8 +58,8 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField prefHeight="37.0" prefWidth="160.0" promptText="Email-cím" GridPane.columnIndex="1" />
-                              <PasswordField prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="loginNameTextBox" prefHeight="37.0" prefWidth="160.0" promptText="E-mail cím" GridPane.columnIndex="1" />
+                              <PasswordField fx:id="loginPwdTextBox" prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>
@@ -103,11 +103,12 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField promptText="Email-cím" GridPane.columnIndex="1" />
+                              <TextField fx:id="regEmailTextBox" promptText="Email-cím" GridPane.columnIndex="1" />
                               <TextField promptText="Név" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <PasswordField promptText="Titkos jelszó" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <PasswordField fx:id="regPwdTextBox" promptText="Titkos jelszó" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
+                        <Button fx:id="back2Login" layoutX="493.0" layoutY="516.0" mnemonicParsing="false" onAction="#back2Login" prefHeight="25.0" prefWidth="171.0" text="Vissza a bejelentkezéshez" />
                      </children>
                   </AnchorPane>
                </content>
@@ -191,7 +192,7 @@
             </Tab>
             <Tab fx:id="kosar" text="Kosár">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../ProjektoV2/images/kosar.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="797.0" prefWidth="800.0" style="-fx-background-image: url('file:../ProjektoV2/images/kosar.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-11.0" layoutY="-3.0" prefHeight="74.0" prefWidth="811.0" style="-fx-background-color: #15592f;" text="Kosár" textAlignment="CENTER" textFill="#ffb726">
                            <font>
@@ -209,7 +210,7 @@
                               <Font size="36.0" />
                            </font>
                         </Label>
-                        <Button layoutX="576.0" layoutY="646.0" mnemonicParsing="false" onAction="#Payout" text="Rendelés">
+                        <Button layoutX="595.0" layoutY="601.0" mnemonicParsing="false" onAction="#Payout" text="Rendelés">
                            <font>
                               <Font size="33.0" />
                            </font>
@@ -223,7 +224,7 @@
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="312.7999877929688" minWidth="10.0" prefWidth="99.60002441406249" />
                            </columnConstraints>
                         </GridPane>
-                        <Button alignment="CENTER" layoutX="36.0" layoutY="646.0" mnemonicParsing="false" onAction="#goBackToRest" prefHeight="61.0" prefWidth="117.0" text="Vissza">
+                        <Button alignment="CENTER" layoutX="631.0" layoutY="683.0" mnemonicParsing="false" onAction="#goBackToRest" prefHeight="61.0" prefWidth="117.0" text="Vissza">
                            <font>
                               <Font size="27.0" />
                            </font>
@@ -234,6 +235,21 @@
                            </font>
                         </Label>
                         <Button layoutX="705.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleLogOut" text="Kijelentkezés" />
+                        <Text fill="WHITE" layoutX="37.0" layoutY="688.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nézz meg egy hirdetést és rendelésedhez 5% KEDVEZMÉNYT adunk!" wrappingWidth="229.6953125">
+                           <font>
+                              <Font name="Courier New" size="16.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="watchAdButtton" layoutX="300.0" layoutY="676.0" mnemonicParsing="false" onAction="#watchAdButton_Pressed" prefHeight="52.0" prefWidth="97.0" style="-fx-background-color: #15592f;" text="Megnézem!" textFill="#ffb726" underline="true">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="applyCupon" layoutX="415.0" layoutY="681.0" mnemonicParsing="false" onAction="#applyCupon_pushed" prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: #15592f;" text="Kupon alkalmazása" textFill="#ffb726">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
                </content>
