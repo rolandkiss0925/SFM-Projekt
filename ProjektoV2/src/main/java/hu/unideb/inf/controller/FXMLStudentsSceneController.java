@@ -361,12 +361,21 @@ public class FXMLStudentsSceneController implements Initializable{
 
 
     //--------------------------SEGED FÜGGVÉNYEK----------------------------------------------------------------------------
-    private String SetName(String button, int k) {return String.format("%s%d",button,k);}
-    private String SetName2(String s) {return String.format("%s",s);}
+    public static String SetName(String button, int k) {return String.format("%s%d",button,k);}
+    public static String SetName2(String s) {return String.format("%s",s);}
 
-    public void plusitem(ActionEvent actionEvent) {menulist.getItems().add(menus1.getValue());}
-    public void plusitem2(ActionEvent actionEvent) {menulist.getItems().add(menus2.getValue()); }
-    public void plusitem3(ActionEvent actionEvent) {menulist.getItems().add(menus3.getValue()); }
+    public void plusitem(ActionEvent actionEvent) {
+        if (menus1.getValue() != null)
+            menulist.getItems().add(menus1.getValue());
+    }
+    public void plusitem2(ActionEvent actionEvent) {
+        if (menus1.getValue() != null)
+            menulist.getItems().add(menus2.getValue());
+    }
+    public void plusitem3(ActionEvent actionEvent) {
+        if (menus1.getValue() != null)
+            menulist.getItems().add(menus3.getValue());
+    }
 
     public void minusitem(ActionEvent actionEvent) {menulist.getItems().remove(menus1.getValue());}
     public void minusitem2(ActionEvent actionEvent) {menulist.getItems().remove(menus2.getValue());}
@@ -449,7 +458,7 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
 
-    public List<Users> readAllUsersFromCSV(){
+    public static List<Users> readAllUsersFromCSV(){
         List<Users> result = new ArrayList<>();
         try {
             Scanner sc = new Scanner(new File("src/main/java/hu/unideb/inf/controller/user_data.csv"));
@@ -471,7 +480,7 @@ public class FXMLStudentsSceneController implements Initializable{
         return result;
     }
 
-    public boolean doesUserExists(Users u1){
+    public static boolean doesUserExists(Users u1){
         List<Users> usersList = readAllUsersFromCSV();
         return usersList.contains(u1);
     }
