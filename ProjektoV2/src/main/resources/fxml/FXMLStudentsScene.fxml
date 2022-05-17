@@ -191,7 +191,7 @@
             </Tab>
             <Tab fx:id="kosar" text="Kosár">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../SFMProjekto/images/kosar.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../ProjektoV2/images/kosar.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-11.0" layoutY="-3.0" prefHeight="74.0" prefWidth="811.0" style="-fx-background-color: #15592f;" text="Kosár" textAlignment="CENTER" textFill="#ffb726">
                            <font>
