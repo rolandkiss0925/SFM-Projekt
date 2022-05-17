@@ -76,26 +76,31 @@ public class MainApp extends Application {
                 String[] tomb = sor.split(";");
                 if (etterem.equals(tomb[0])) {
 
-                    Food etel = new Food();
-                    etel.setType(Food.Type.ETEL);
-                    etel.setName(tomb[1]);
-                    etel.setPrice(Integer.parseInt(tomb[3]));
-                    etel.setDb(1);
-                    r.getFoods().add(etel);
+                    if (!(tomb[1].equals(""))) {
+                        Food etel = new Food();
+                        etel.setType(Food.Type.ETEL);
+                        etel.setName(tomb[1]);
+                        etel.setPrice(Integer.parseInt(tomb[3]));
+                        etel.setDb(1);
+                        r.getFoods().add(etel);
+                    }
+                    if (!(tomb[2].equals(""))) {
+                        Drink ital = new Drink();
+                        ital.setType(Food.Type.ITAL);
+                        ital.setName(tomb[2]);
+                        ital.setPrice(Integer.parseInt(tomb[4]));
+                        ital.setDb(1);
+                        r.getFoods().add(ital);
+                    }
 
-                    Drink ital = new Drink();
-                    ital.setType(Food.Type.ITAL);
-                    ital.setName(tomb[2]);
-                    ital.setPrice(Integer.parseInt(tomb[4]));
-                    ital.setDb(1);
-                    r.getFoods().add(ital);
-
-                    Garnish koret = new Garnish();
-                    koret.setType(Food.Type.KORET);
-                    koret.setName(tomb[5]);
-                    koret.setPrice(Integer.parseInt(tomb[6]));
-                    koret.setDb(1);
-                    r.getFoods().add(koret);
+                    if (!(tomb[5].equals(""))) {
+                        Garnish koret = new Garnish();
+                        koret.setType(Food.Type.KORET);
+                        koret.setName(tomb[5]);
+                        koret.setPrice(Integer.parseInt(tomb[6]));
+                        koret.setDb(1);
+                        r.getFoods().add(koret);
+                    }
 
                     i++;
                 }

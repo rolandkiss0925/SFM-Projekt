@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -50,7 +48,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="E-mail cím" textFill="#f8f6f6">
+                              <Label text="Felhasználó név" textFill="#f8f6f6">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -60,8 +58,8 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="loginNameTextBox" prefHeight="37.0" prefWidth="160.0" promptText="E-mail cím" GridPane.columnIndex="1" />
-                              <PasswordField fx:id="loginPwdTextBox" prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField prefHeight="37.0" prefWidth="160.0" promptText="Email-cím" GridPane.columnIndex="1" />
+                              <PasswordField prefHeight="35.0" prefWidth="159.0" promptText="Jelszó" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>
@@ -105,12 +103,11 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="regEmailTextBox" promptText="Email-cím" GridPane.columnIndex="1" />
+                              <TextField promptText="Email-cím" GridPane.columnIndex="1" />
                               <TextField promptText="Név" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <PasswordField fx:id="regPwdTextBox" promptText="Titkos jelszó" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <PasswordField promptText="Titkos jelszó" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
-                        <Button fx:id="back2Login" layoutX="517.0" layoutY="523.0" mnemonicParsing="false" onAction="#back2Login" text="Vissza a bejelentkezéshez" />
                      </children>
                   </AnchorPane>
                </content>
@@ -124,11 +121,12 @@
                               <Font name="System Bold Italic" size="32.0" />
                            </font>
                         </Label>
-                        <GridPane fx:id="etteremgrid" alignment="CENTER" gridLinesVisible="true" layoutX="303.0" layoutY="175.0" prefHeight="165.0" prefWidth="361.0">
+                        <GridPane fx:id="etteremgrid" alignment="CENTER" layoutX="514.0" layoutY="180.0" prefHeight="165.0" prefWidth="361.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                            </columnConstraints>
                         </GridPane>
+                        <Button layoutX="705.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleLogOut" text="Kijelentkezés" />
                      </children>
                   </AnchorPane>
                </content>
@@ -186,101 +184,56 @@
                            </font>
                         </Label>
                         <Label layoutX="66.0" layoutY="723.0" text="Ha nem ízlene" textFill="WHITE" />
+                        <Button layoutX="705.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleLogOut" text="Kijelentkezés" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
             <Tab fx:id="kosar" text="Kosár">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('file:../SFMProjekto/images/kosar.jpg'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-size: cover;">
                      <children>
-                        <Label prefHeight="74.0" prefWidth="811.0" style="-fx-background-color: #15592f;" text="                                   Kosár" textAlignment="CENTER" textFill="#ffb726">
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-11.0" layoutY="-3.0" prefHeight="74.0" prefWidth="811.0" style="-fx-background-color: #15592f;" text="Kosár" textAlignment="CENTER" textFill="#ffb726">
                            <font>
                               <Font name="System Bold Italic" size="32.0" />
                            </font>
                         </Label>
-                        <Line endX="699.0" layoutX="101.0" layoutY="492.0" startX="-100.0" />
-                        <Text layoutX="37.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teljes ár:" wrappingWidth="179.13671875">
+                        <Line endX="699.0" layoutX="101.0" layoutY="539.0" startX="-100.0" stroke="WHITE" />
+                        <Text fill="WHITE" layoutX="37.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teljes ár:" wrappingWidth="179.13671875">
                            <font>
                               <Font size="36.0" />
                            </font>
                         </Text>
-                        <Label fx:id="totalPrice" layoutX="216.0" layoutY="553.0" text="Label">
+                        <Label fx:id="totalPrice" layoutX="216.0" layoutY="553.0" text="Label" textFill="WHITE">
                            <font>
                               <Font size="36.0" />
                            </font>
                         </Label>
-                        <Button layoutX="575.0" layoutY="635.0" mnemonicParsing="false" onAction="#Payout" text="Rendelés">
+                        <Button layoutX="576.0" layoutY="646.0" mnemonicParsing="false" onAction="#Payout" text="Rendelés">
                            <font>
                               <Font size="33.0" />
                            </font>
                         </Button>
-                        <GridPane fx:id="kosargrid" alignment="CENTER" layoutX="82.0" layoutY="114.0" prefHeight="210.0" prefWidth="709.0">
+                        <GridPane fx:id="kosargrid" alignment="CENTER" layoutX="12.0" layoutY="114.0" prefHeight="327.0" prefWidth="497.0">
                            <columnConstraints>
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="245.60003662109375" minWidth="-Infinity" prefWidth="245.60003662109375" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="127.20001220703125" minWidth="0.0" prefWidth="27.799999999999983" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="182.20000000000002" minWidth="10.0" prefWidth="91.99998779296874" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="184.00001220703126" minWidth="10.0" prefWidth="26.800012207031273" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="267.20000000000005" minWidth="10.0" prefWidth="263.9999877929688" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="351.999951171875" minWidth="-Infinity" prefWidth="253.5999755859375" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="201.00003662109373" minWidth="0.0" prefWidth="35.59996337890627" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="211.4" minWidth="10.0" prefWidth="77.20003662109377" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="184.00001220703126" minWidth="0.0" prefWidth="37.19997558593752" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="312.7999877929688" minWidth="10.0" prefWidth="99.60002441406249" />
                            </columnConstraints>
                         </GridPane>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab fx:id="kosar1" text="Proba">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label prefHeight="74.0" prefWidth="811.0" style="-fx-background-color: #15592f;" text="                                   Kosár" textAlignment="CENTER" textFill="#ffb726">
+                        <Button alignment="CENTER" layoutX="36.0" layoutY="646.0" mnemonicParsing="false" onAction="#goBackToRest" prefHeight="61.0" prefWidth="117.0" text="Vissza">
                            <font>
-                              <Font name="System Bold Italic" size="32.0" />
-                           </font>
-                        </Label>
-                        <Separator layoutX="7.0" layoutY="588.0" prefHeight="0.0" prefWidth="793.0">
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
-                        </Separator>
-                        <Label layoutX="36.0" layoutY="646.0" text="Fizetendő:">
-                           <font>
-                              <Font size="33.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="252.0" layoutY="646.0" text="\%Ft">
-                           <font>
-                              <Font size="33.0" />
-                           </font>
-                        </Label>
-                        <Button layoutX="575.0" layoutY="635.0" mnemonicParsing="false" onAction="#Payout" text="Rendelés">
-                           <font>
-                              <Font size="33.0" />
+                              <Font size="27.0" />
                            </font>
                         </Button>
-                        <GridPane fx:id="table111" layoutX="92.0" layoutY="193.0" prefHeight="169.0" prefWidth="659.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="30.0" minHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Label text="   Pizza" />
-                              <Label text="Hamburger" GridPane.rowIndex="1" />
-                              <Button fx:id="countmin11" mnemonicParsing="false" onAction="#minusitem" text="-1" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#plusitem" text="+1" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" onAction="#plusitem" text="+1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" text="-1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label fx:id="countitem11" text="Darabszám" GridPane.columnIndex="3" />
-                              <Label text="Darabszám" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                           </children>
-                        </GridPane>
+                        <Label fx:id="biztos" layoutX="360.0" layoutY="435.0" prefHeight="42.0" prefWidth="153.0" text="Label" textFill="RED">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="705.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleLogOut" text="Kijelentkezés" />
                      </children>
                   </AnchorPane>
                </content>

@@ -14,7 +14,6 @@ import javafx.scene.layout.GridPane;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceUnit;
-import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -58,92 +57,133 @@ public class FXMLStudentsSceneController implements Initializable{
     private ChoiceBox<String> myChoiceBox;
 
     @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private Label biztos;
+
+    @FXML
     private GridPane kosargrid;
 
     @FXML
     private Label totalPrice;
 
     @FXML
-    private TextField loginNameTextBox;
-
-    @FXML
-    private TextField loginPwdTextBox;
-
-    @FXML
-    private TextField regEmailTextBox;
-
-    @FXML
-    private TextField regPwdTextBox;
-
-    List<Node> nodes = new ArrayList<>();
-
-    @FXML
     public void handleLoadButtonPushed(ActionEvent event) {
 
-        kosargrid.getChildren().removeAll(nodes);
+        biztos.setText("");
 
-     /*   for (var e : kosargrid.getChildren()){
-            kosargrid.getChildren().removeAll(e);
-        } */
-        System.out.println(etterem_nev.getText());
+        for (Restaurant r : MainApp.getEttermek())
+            if (r.getName().equals(etterem_nev.getText()))
+                for (var f : r.getFoods()){
+                    int darab = 0;
+                    for (String s : menulist.getItems())
+                        if (s.equals(f.getName()))
+                            darab++;
+                    f.setDb(darab);
+                    }
+
+        kosargrid.getChildren().clear();
+
         int i = 0;
         final int[] total = {0};
         for (Restaurant r : MainApp.getEttermek()) {
             if (r.getName().equals(etterem_nev.getText())) {
+                List<String> addedFoods = new ArrayList<>();
                 for (String s : menulist.getItems()) {
                     for (Food f : r.getFoods()) {
                         if (s.equals(f.getName())) {
+
                             Label name = new Label();
-                            name.setText(f.getName());
-                            name.setPrefSize(150, 75);
-
-                            Label db = new Label(f.getDb() + "");
-
+                            Label db = new Label();
                             Label price = new Label();
-                            int baseprice = f.getPrice();
-                            price.setText(baseprice + " Ft");
 
-                            Button min = new Button("-");
-                            int finalI = i;
-                            min.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent actionEvent) {
-                                    total[0] -= baseprice;
-                                    totalPrice.setText(total[0] + " Ft");
-                                    f.setDb(f.getDb() - 1);
-                                    db.setText(f.getDb() + "");
-                                    f.setPrice(baseprice * f.getDb());
-                                    price.setText(f.getPrice() + " Ft");
-                                    if (f.getDb() == 0)
-                                        kosargrid.getChildren().removeIf(n -> GridPane.getRowIndex(n) == finalI);
-                                }
-                            });
+                            if (!(addedFoods.contains(s))) {
 
-                            Button plus = new Button("+");
-                            plus.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent actionEvent) {
-                                    total[0] += baseprice;
-                                    totalPrice.setText(total[0] + " Ft");
-                                    f.setDb(f.getDb() + 1);
-                                    f.setPrice(baseprice * f.getDb());
-                                    price.setText(f.getPrice() + " Ft");
-                                    db.setText(f.getDb() + "");
-                                }
-                            });
+                                name.setText(f.getName());
+                                name.setPrefSize(250, 125);
+                                name.setStyle("-fx-font-size: 24 px; -fx-text-fill: white");
 
-                            total[0] += f.getPrice();
+                                db.setText(f.getDb() + "");
+                                db.setStyle("-fx-font-size: 24 px; -fx-text-fill: white");
 
-                            totalPrice.setText(total[0] + " Ft");
+                                int baseprice = f.getPrice();
+                                price.setText(baseprice * f.getDb() + " Ft");
+                                price.setStyle("-fx-font-size: 24 px; -fx-text-fill: white");
 
-                            kosargrid.addRow(i, name, min, db, plus, price);
-                            i++;
+                                Button min = new Button("-");
+                                int finalI = i;
+                                min.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent actionEvent) {
 
-                            nodes.add(name);
-                            nodes.add(min);
-                            nodes.add(db);
-                            nodes.add(plus);
-                            nodes.add(price);
+                                        if (f.getClass().equals(Food.class)) {
+                                            menus1.setValue(name.getText());
+                                            minusitem(actionEvent);
+                                        }
+                                        else if (f.getClass().equals(Drink.class)) {
+                                            menus2.setValue(name.getText());
+                                            minusitem2(actionEvent);
+                                        }
+                                        else if (f.getClass().equals(Garnish.class)) {
+                                            menus3.setValue(name.getText());
+                                            minusitem3(actionEvent);
+                                        }
+
+                                        total[0] -= baseprice;
+                                        totalPrice.setText(total[0] + " Ft");
+                                        f.setDb(f.getDb() - 1);
+                                        db.setText(f.getDb() + "");
+                                        price.setText(baseprice * f.getDb() + " Ft");
+                                        if (f.getDb() == 0) {
+                                            kosargrid.getChildren().removeIf(n -> GridPane.getRowIndex(n) == finalI);
+                                        }
+                                        if (f.getDb() >= 10)
+                                            biztos.setText("( ͡° ͜ʖ ͡°)");
+                                        else
+                                            biztos.setText("");
+                                    }
+                                });
+
+                                Button plus = new Button("+");
+                                plus.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent actionEvent) {
+
+                                        if (f.getClass().equals(Food.class)) {
+                                            menus1.setValue(name.getText());
+                                            plusitem(actionEvent);
+                                        }
+                                        else if (f.getClass().equals(Drink.class)){
+                                            menus2.setValue(name.getText());
+                                            plusitem2(actionEvent);
+                                        }
+                                        else if (f.getClass().equals(Garnish.class)) {
+                                            menus3.setValue(name.getText());
+                                            plusitem3(actionEvent);
+                                        }
+
+                                        total[0] += baseprice;
+                                        totalPrice.setText(total[0] + " Ft");
+                                        f.setDb(f.getDb() + 1);
+                                        price.setText(baseprice * f.getDb() + " Ft");
+                                        db.setText(f.getDb() + "");
+                                        if (f.getDb() >= 10)
+                                            biztos.setText("( ͡° ͜ʖ ͡°)");
+                                        else
+                                            biztos.setText("");
+                                    }
+                                });
+
+                                total[0] += Integer.parseInt(price.getText().split(" ")[0]);
+
+                                totalPrice.setText(total[0] + " Ft");
+
+                                kosargrid.addRow(i, name, min, db, plus, price);
+                                i++;
+
+                                addedFoods.add(name.getText());
+                            }
                         }
                     }
                 }
@@ -170,42 +210,32 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
     public void LognGEnyo(ActionEvent actionEvent) {
-        Users felhasznalo = new Users(loginNameTextBox.getText(), loginPwdTextBox.getText());
-        if (doesUserExists(felhasznalo)){
-            int x = etteremekarray.size();
-            Button[] button = new Button[x];
-            for (int i = 0; i < x; i++) {
-                button[i] = new Button();
-                button[i].setText(SetName2(etteremekarray.get(i)));
-                button[i].setId(SetName(etteremekarray.get(i),i));
-                button[i].setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        String text = "zegz";
-                        text = ((Button)actionEvent.getSource()).getText();
-                        init(text);
-                        makemenufromrestaurnat(text);
-                        makedrinkfromrestaurnat(text);
-                        makekoretfromrestaurnat(text);
-                        tp.getSelectionModel().select(etterem);
-                    }
-                });
-                etteremgrid.add(button[i],0,i);
-                button[i].setStyle("-fx-background-color: darkblue");
-                button[i].setStyle("-fx-text-fill: darkblue");
-                etteremgrid.setHgap(11);
-                etteremgrid.setVgap(11);
-            }
-            tp.getSelectionModel().select(etteremeink);
-        }else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Hiba");
-            alert.setHeaderText("E-mail cím vagy jelszó helytelen!");
-            alert.showAndWait();
+        int x = etteremekarray.size();
+        Button[] button = new Button[x];
+        for (int i = 0; i < x; i++) {
+            button[i] = new Button();
+            button[i].setText(SetName2(etteremekarray.get(i)));
+            button[i].setId(SetName(etteremekarray.get(i),i));
+            button[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    String text = "zegz";
+                    text = ((Button)actionEvent.getSource()).getText();
+                    init(text);
+                    makemenufromrestaurnat(text);
+                    makedrinkfromrestaurnat(text);
+                    makekoretfromrestaurnat(text);
+                    tp.getSelectionModel().select(etterem);
+                }
+            });
+            etteremgrid.add(button[i],0,i);
+            button[i].setStyle("-fx-background-color: darkblue");
+            button[i].setStyle("-fx-text-fill: darkblue");
+            button[i].setPrefSize(100, 50);
+            etteremgrid.setHgap(11);
+            etteremgrid.setVgap(11);
         }
-
-
-
+        tp.getSelectionModel().select(etteremeink);
     }
     private void makedrinkfromrestaurnat(String text) {
         italgenyok.addAll(JpaFoodDAO.getdrink(text));
@@ -240,11 +270,8 @@ public class FXMLStudentsSceneController implements Initializable{
     }
     //Vissza lép regisztráció után a Login oldalra
     public void GobackForLogin(ActionEvent actionEvent) {
-        Users u = new Users(regEmailTextBox.getText(), regPwdTextBox.getText());
-        registUserToCSV(u);
-
-        //showAlertWithDefaultHeaderText();
-        //tp.getSelectionModel().select(Login);
+        showAlertWithDefaultHeaderText();
+        tp.getSelectionModel().select(Login);
     }
 
     public void Restaurant(MouseEvent mouseEvent) {
@@ -252,12 +279,12 @@ public class FXMLStudentsSceneController implements Initializable{
 
     //Kosar oldalára lép
     public void Gotokosar(ActionEvent actionEvent) {
-        tp.getSelectionModel().select(kosar);
         handleLoadButtonPushed(actionEvent);
+        tp.getSelectionModel().select(kosar);
     }
 
     //Vissza lép az éttermekre
-     public void GobacktoRestaurants(ActionEvent actionEvent) {
+    public void GobacktoRestaurants(ActionEvent actionEvent) {
 
         menus1.getItems().removeAll(kajagenyok);
         kajagenyok.clear();
@@ -266,13 +293,24 @@ public class FXMLStudentsSceneController implements Initializable{
         menus3.getItems().removeAll(koretgenyok);
         koretgenyok.clear();
 
+        menulist.getItems().clear();
+
+        kosargrid.getChildren().clear();
+
+        totalPrice.setText("");
 
         tp.getSelectionModel().select(etteremeink);
     }
 
-    public void back2Login(ActionEvent actionEvent){
+    public void goBackToRest(ActionEvent actionEvent){
+        tp.getSelectionModel().select(etterem);
+    }
+
+    public void handleLogOut(ActionEvent actionEvent){
+        GobacktoRestaurants(actionEvent);
         tp.getSelectionModel().select(Login);
     }
+
 
     //--------------------------SEGED FÜGGVÉNYEK----------------------------------------------------------------------------
     private String SetName(String button, int k) {return String.format("%s%d",button,k);}
@@ -319,67 +357,5 @@ public class FXMLStudentsSceneController implements Initializable{
     }
 
     public void makegrid(ActionEvent actionEvent) {
-    }
-
-    public List<Users> readAllUsersFromCSV(){
-        List<Users> result = new ArrayList<>();
-        try {
-            Scanner sc = new Scanner(new File("src/main/java/hu/unideb/inf/controller/user_data.csv"));
-            while (sc.hasNextLine()){
-                String line = sc.nextLine();
-                String[] token = line.split(";");
-                Users u = new Users(token[0], token[1]);
-                result.add(u);
-            }
-        }
-        catch (FileNotFoundException e){
-            System.out.println("User database not found! Exception: " + e);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Hiba");
-            alert.setHeaderText("User database not found! Exception: " + e);
-            alert.showAndWait();
-            return null;
-        }
-        return result;
-    }
-
-    public boolean doesUserExists(Users u1){
-        List<Users> usersList = readAllUsersFromCSV();
-        return usersList.contains(u1);
-    }
-
-    public List<String> getAllUserNames(){
-        List<String> res = new ArrayList<>();
-        List<Users> usersList = readAllUsersFromCSV();
-        for (Users u:usersList
-        ) {
-            res.add(u.getName());
-        }
-
-        return res;
-    }
-
-    public void registUserToCSV(Users u){
-        if (!doesUserExists(u) && !getAllUserNames().contains(u.getName())){
-            try {
-                File f =new File("src/main/java/hu/unideb/inf/controller/user_data.csv");
-                FileWriter fw = new FileWriter(f, true);
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.newLine();
-                bw.write(u.getName() + ";" + u.getPassword());
-
-                bw.close();
-                showAlertWithDefaultHeaderText();
-            }
-            catch (IOException e){
-                System.out.println("File not found! Exception: " + e);
-            }
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Hiba");
-            alert.setHeaderText("Ez a felhasználónév már foglalt!");
-            alert.showAndWait();
-        }
     }
 }
